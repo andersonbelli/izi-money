@@ -1,0 +1,23 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  # A list of all available lints and their documentation is published at
+  # https://dart-lang.github.io/linter/lints/index.html.
+  rules:
+
+    prefer_single_quotes: true
+    prefer_final_fields: true
+    prefer_if_null_operators: true
+    prefer_mixin: true
+    prefer_spread_collections: true
+
+    throw_in_finally: true
+    curly_braces_in_flow_control_structures: true
+    eol_at_end_of_file: true
+    sized_box_shrink_expand: true
+    sized_box_for_whitespace: true
+
+    always_declare_return_types: true
+    always_use_package_imports: true
+
+    # sort_pub_dependencies: true
