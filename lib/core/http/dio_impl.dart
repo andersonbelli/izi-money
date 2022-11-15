@@ -14,8 +14,6 @@ class DioImpl extends HttpManager {
     try {
       final response = await _dio.get(endpoint);
 
-      print('response --> ${response.data}');
-
       if (response.statusCode == 200) {
         return jsonDecode(jsonEncode(response.data));
       }

@@ -1,27 +1,27 @@
 import 'package:izi_money/features/latest_exchange/domain/entities/rates.entity.dart';
 
-class RatesModel {
-  double? bRL;
-  double? bTC;
-  double? cLP;
-  double? eUR;
-  double? mXN;
-  double? uSD;
-
+class RatesModel extends Rates {
   RatesModel({
-    this.bRL,
-    this.bTC,
-    this.cLP,
-    this.eUR,
-    this.mXN,
-    this.uSD,
-  });
+    double? bRL,
+    double? bTC,
+    double? cLP,
+    int? eUR,
+    double? mXN,
+    double? uSD,
+  }) : super(
+          bRL: bRL,
+          bTC: bTC,
+          cLP: cLP,
+          eUR: eUR,
+          mXN: mXN,
+          uSD: uSD,
+        );
 
   RatesModel.fromJson(Map<String, dynamic> json) {
     bRL = double.tryParse(json['BRL'].toString());
     bTC = double.tryParse(json['BTC'].toString());
     cLP = double.tryParse(json['CLP'].toString());
-    eUR = double.tryParse(json['EUR'].toString());
+    eUR = json['EUR'];
     mXN = double.tryParse(json['MXN'].toString());
     uSD = double.tryParse(json['USD'].toString());
   }
