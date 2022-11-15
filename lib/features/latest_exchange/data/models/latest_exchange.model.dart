@@ -1,5 +1,5 @@
-import 'package:izi_money/latest_exchange/data/models/rates.model.dart';
-import 'package:izi_money/latest_exchange/domain/entities/latest_exchange.entity.dart';
+import 'package:izi_money/features/latest_exchange/data/models/rates.model.dart';
+import 'package:izi_money/features/latest_exchange/domain/entities/latest_exchange.entity.dart';
 
 class LatestExchangeModel {
   bool? success;

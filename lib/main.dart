@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:izi_money/core/http/dio_impl.dart';
 import 'package:izi_money/core/utils/app_colors.dart';
-import 'package:izi_money/latest_exchange/data/datasources/latest.remote.datasource.dart';
+import 'package:izi_money/features/latest_exchange/data/datasources/latest.remote.datasource.dart';
 
 void main() {
   runApp(const MainApp());

@@ -1,4 +1,4 @@
-import 'package:izi_money/latest_exchange/domain/entities/rates.entity.dart';
+import 'package:izi_money/features/latest_exchange/domain/entities/rates.entity.dart';
 
 class RatesModel {
   double? bRL;
