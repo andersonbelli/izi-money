@@ -1,0 +1,3 @@
+mixin BaseDI {
+  void registerAll();
+}

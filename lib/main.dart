@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:izi_money/core/utils/app_colors.dart';
+import 'package:izi_money/dio/core.di.dart';
 import 'package:izi_money/features/latest_exchange/presentation/pages/latest.page.dart';
 
 void main() {
+  CoreDI().registerAll();
   runApp(const MainApp());
 }
 
