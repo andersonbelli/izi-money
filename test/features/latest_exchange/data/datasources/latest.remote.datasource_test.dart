@@ -7,7 +7,7 @@ import 'package:mockito/mockito.dart';
 import '../../mock_latest_exchange.model.dart';
 import 'latest.remote.datasource_test.mocks.dart';
 
-@GenerateMocks([LatestDataSource])
+@GenerateMocks([ILatestDataSource])
 void main() {
   late MockILatestDataSource latestDataSource;
 
