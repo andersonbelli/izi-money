@@ -1,5 +1,9 @@
 import 'package:izi_money/features/latest_exchange/domain/entities/rates.entity.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'rates.model.g.dart';
+
+@JsonSerializable()
 class RatesModel extends Rates {
   RatesModel({
     double? bRL,
@@ -17,27 +21,19 @@ class RatesModel extends Rates {
           uSD: uSD,
         );
 
-  RatesModel.fromJson(Map<String, dynamic> json) {
-    bRL = double.tryParse(json['BRL'].toString());
-    bTC = double.tryParse(json['BTC'].toString());
-    cLP = double.tryParse(json['CLP'].toString());
-    eUR = json['EUR'];
-    mXN = double.tryParse(json['MXN'].toString());
-    uSD = double.tryParse(json['USD'].toString());
-  }
+  factory RatesModel.fromJson(Map<String, dynamic> json) =>
+      _$RatesModelFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['BRL'] = bRL;
-    data['BTC'] = bTC;
-    data['CLP'] = cLP;
-    data['EUR'] = eUR;
-    data['MXN'] = mXN;
-    data['USD'] = uSD;
-    return data;
-  }
+  Map<String, dynamic> toJson() => _$RatesModelToJson(this);
 
-  factory RatesModel.fromRates(Rates? rates) {
-    return RatesModel();
+  factory RatesModel.fromRates(Rates rates) {
+    return RatesModel(
+      uSD: rates.uSD,
+      mXN: rates.mXN,
+      eUR: rates.eUR,
+      cLP: rates.cLP,
+      bTC: rates.bTC,
+      bRL: rates.bRL,
+    );
   }
 }

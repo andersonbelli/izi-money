@@ -7,6 +7,6 @@ abstract class MockLatestExchangeModel {
     success: true,
     base: 'EUR',
     date: '2022-11-15',
-    rates: MockRatesModel.mock,
+    ratesModel: MockRatesModel.mock,
   );
 }

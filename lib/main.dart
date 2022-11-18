@@ -4,6 +4,7 @@ import 'package:izi_money/dio/core.di.dart';
 import 'package:izi_money/features/latest_exchange/presentation/pages/latest.page.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   CoreDI().registerAll();
   runApp(const MainApp());
 }

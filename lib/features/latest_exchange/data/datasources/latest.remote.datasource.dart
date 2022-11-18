@@ -1,6 +1,7 @@
 import 'package:izi_money/core/http/http_manager.dart';
 import 'package:izi_money/core/utils/server_config.dart';
 import 'package:izi_money/features/latest_exchange/data/models/latest_exchange.model.dart';
+import 'package:izi_money/features/latest_exchange/data/models/rates.model.dart';
 
 abstract class ILatestDataSource {
   Future<LatestExchangeModel> getLatest();
@@ -13,8 +14,23 @@ class LatestDataSource extends ILatestDataSource {
 
   @override
   Future<LatestExchangeModel> getLatest() async {
-    final response = await http.get(ServerConfig.LATEST_ENDPOINT);
+    if (http.mock) {
+      return LatestExchangeModel(
+        success: true,
+        base: 'EUR',
+        date: '2022-11-15',
+        ratesModel: RatesModel(
+          bRL: 5.506377,
+          bTC: 0.000062,
+          cLP: 920.346155,
+          eUR: 1,
+          mXN: 19.954985,
+          uSD: 1.033599,
+        ),
+      );
+    }
 
+    final response = await http.get(ServerConfig.LATEST_ENDPOINT);
     return LatestExchangeModel.fromJson(response);
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:izi_money/core/http/http_manager.dart';
@@ -9,8 +10,18 @@ import 'package:izi_money/core/utils/server_config.dart';
 class DioImpl extends HttpManager {
   final Dio _dio = Dio(BaseOptions(baseUrl: ServerConfig.BASE_URL));
 
+  DioImpl({bool mock = false}) : super(mock);
+
   @override
-  Future<dynamic> get(String endpoint) async {
+  Future get(String endpoint) async {
+    if (mock) {
+      log(
+        '''⚠️ WARNING: You're in mock HTTP and a mocked value was not provided for this request ⚠️''',
+      );
+
+      return Future.value();
+    }
+
     try {
       final response = await _dio.get(endpoint);
 

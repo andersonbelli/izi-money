@@ -9,7 +9,7 @@ class CoreDI implements BaseDI {
   void registerAll() {
     // Http
     Injector.di.registerFactory<HttpManager>(
-      () => DioImpl(),
+      () => DioImpl(mock: true),
     );
 
     /// Features DI
