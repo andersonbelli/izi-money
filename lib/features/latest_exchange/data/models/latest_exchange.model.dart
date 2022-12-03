@@ -6,6 +6,7 @@ part 'latest_exchange.model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class LatestExchangeModel extends LatestExchange {
+  @JsonKey(name: 'rates')
   final RatesModel ratesModel;
 
   LatestExchangeModel({

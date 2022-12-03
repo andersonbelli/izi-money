@@ -6,19 +6,19 @@ part 'rates.model.g.dart';
 @JsonSerializable()
 class RatesModel extends Rates {
   RatesModel({
-    double? bRL,
-    double? bTC,
-    double? cLP,
-    int? eUR,
-    double? mXN,
-    double? uSD,
+    double? BRL,
+    double? BTC,
+    double? CLP,
+    int? EUR,
+    double? MXN,
+    double? USD,
   }) : super(
-          bRL: bRL,
-          bTC: bTC,
-          cLP: cLP,
-          eUR: eUR,
-          mXN: mXN,
-          uSD: uSD,
+          BRL: BRL,
+          BTC: BTC,
+          CLP: CLP,
+          EUR: EUR,
+          MXN: MXN,
+          USD: USD,
         );
 
   factory RatesModel.fromJson(Map<String, dynamic> json) =>
@@ -28,12 +28,12 @@ class RatesModel extends Rates {
 
   factory RatesModel.fromRates(Rates rates) {
     return RatesModel(
-      uSD: rates.uSD,
-      mXN: rates.mXN,
-      eUR: rates.eUR,
-      cLP: rates.cLP,
-      bTC: rates.bTC,
-      bRL: rates.bRL,
+      USD: rates.USD,
+      MXN: rates.MXN,
+      EUR: rates.EUR,
+      CLP: rates.CLP,
+      BTC: rates.BTC,
+      BRL: rates.BRL,
     );
   }
 }

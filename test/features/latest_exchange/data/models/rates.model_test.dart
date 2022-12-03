@@ -11,14 +11,14 @@ void main() {
       expect(RatesModel.fromJson(response), isA<RatesModel>());
     });
 
-    test('RatesModel eUR have value 1 and is an integer', () async {
-      expect(RatesModel.fromJson(response).eUR, 1);
-      expect(RatesModel.fromJson(response).eUR, isA<int>);
+    test('RatesModel EUR have value 1 and is an integer', () async {
+      expect(RatesModel.fromJson(response).EUR, 1);
+      expect(RatesModel.fromJson(response).EUR, isA<int>);
     });
 
-    test('RatesModel bRL have value 5.506377 and is a double', () async {
-      expect(RatesModel.fromJson(response).bRL, 5.506377);
-      expect(RatesModel.fromJson(response).bRL, isA<double>);
+    test('RatesModel BRL have value 5.506377 and is a double', () async {
+      expect(RatesModel.fromJson(response).BRL, 5.506377);
+      expect(RatesModel.fromJson(response).BRL, isA<double>);
     });
   });
 }

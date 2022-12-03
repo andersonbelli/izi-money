@@ -18,19 +18,22 @@ class LatestDataSource extends ILatestDataSource {
       return LatestExchangeModel(
         success: true,
         base: 'EUR',
-        date: '2022-11-15',
+        date: '2022-12-03 12:25:19.922692',
         ratesModel: RatesModel(
-          bRL: 5.506377,
-          bTC: 0.000062,
-          cLP: 920.346155,
-          eUR: 1,
-          mXN: 19.954985,
-          uSD: 1.033599,
+          BRL: 5.506377,
+          BTC: 0.000062,
+          CLP: 920.346155,
+          EUR: 1,
+          MXN: 19.954985,
+          USD: 1.033599,
         ),
       );
     }
 
     final response = await http.get(ServerConfig.LATEST_ENDPOINT);
+
+    (response as Map<String, dynamic>)
+        .update('date', (value) => DateTime.now().toString());
     return LatestExchangeModel.fromJson(response);
   }
 }

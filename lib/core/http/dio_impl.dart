@@ -8,7 +8,12 @@ import 'package:izi_money/core/http/models/request_fail.exception.dart';
 import 'package:izi_money/core/utils/server_config.dart';
 
 class DioImpl extends HttpManager {
-  final Dio _dio = Dio(BaseOptions(baseUrl: ServerConfig.BASE_URL));
+  final Dio _dio = Dio(
+    BaseOptions(
+      baseUrl: ServerConfig.BASE_URL,
+      connectTimeout: 600,
+    ),
+  );
 
   DioImpl({bool mock = false}) : super(mock);
 
@@ -16,7 +21,7 @@ class DioImpl extends HttpManager {
   Future get(String endpoint) async {
     if (mock) {
       log(
-        '''⚠️ WARNING: You're in mock HTTP and a mocked value was not provided for this request ⚠️''',
+        '''⚠️ WARNING: You're in mock HTTP and a real value was not provided for this request ⚠️''',
       );
 
       return Future.value();
@@ -29,8 +34,10 @@ class DioImpl extends HttpManager {
         return jsonDecode(jsonEncode(response.data));
       }
 
+      log(response.data);
       throw GenericException(response.data.toString());
     } on DioError catch (e) {
+      log('DioError - ${e.message}');
       throw RequestFailException(message: e.message);
     }
   }

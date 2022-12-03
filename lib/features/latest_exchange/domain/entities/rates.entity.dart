@@ -18,9 +18,9 @@ class Rates {
   double? bMD;
   double? bND;
   double? bOB;
-  double? bRL;
+  double? BRL;
   double? bSD;
-  double? bTC;
+  double? BTC;
   double? bTN;
   double? bWP;
   double? bYN;
@@ -29,7 +29,7 @@ class Rates {
   double? cDF;
   double? cHF;
   double? cLF;
-  double? cLP;
+  double? CLP;
   double? cNH;
   double? cNY;
   double? cOP;
@@ -45,7 +45,7 @@ class Rates {
   double? eGP;
   double? eRN;
   double? eTB;
-  int? eUR;
+  int? EUR;
   double? fJD;
   double? fKP;
   double? gBP;
@@ -99,7 +99,7 @@ class Rates {
   double? mUR;
   double? mVR;
   double? mWK;
-  double? mXN;
+  double? MXN;
   double? mYR;
   double? mZN;
   double? nAD;
@@ -148,7 +148,7 @@ class Rates {
   double? tZS;
   double? uAH;
   double? uGX;
-  double? uSD;
+  double? USD;
   double? uYU;
   double? uZS;
   double? vES;
@@ -189,9 +189,9 @@ class Rates {
       this.bMD,
       this.bND,
       this.bOB,
-      this.bRL,
+      this.BRL,
       this.bSD,
-      this.bTC,
+      this.BTC,
       this.bTN,
       this.bWP,
       this.bYN,
@@ -200,7 +200,7 @@ class Rates {
       this.cDF,
       this.cHF,
       this.cLF,
-      this.cLP,
+      this.CLP,
       this.cNH,
       this.cNY,
       this.cOP,
@@ -216,7 +216,7 @@ class Rates {
       this.eGP,
       this.eRN,
       this.eTB,
-      this.eUR,
+      this.EUR,
       this.fJD,
       this.fKP,
       this.gBP,
@@ -270,7 +270,7 @@ class Rates {
       this.mUR,
       this.mVR,
       this.mWK,
-      this.mXN,
+      this.MXN,
       this.mYR,
       this.mZN,
       this.nAD,
@@ -319,7 +319,7 @@ class Rates {
       this.tZS,
       this.uAH,
       this.uGX,
-      this.uSD,
+      this.USD,
       this.uYU,
       this.uZS,
       this.vES,
