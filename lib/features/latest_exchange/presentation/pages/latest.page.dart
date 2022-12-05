@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
+import 'package:izi_money/core/extensions/string_parser.dart';
 import 'package:izi_money/dio/injector.di.dart';
 import 'package:izi_money/features/latest_exchange/presentation/pages/latest.bloc.dart';
 
@@ -48,11 +48,6 @@ class LatestContent extends StatelessWidget {
           );
         }
         if (state is LatestExchangeState) {
-          final inputFormat = DateFormat('yyyy-MM-dd hh:mm');
-          final inputDate = inputFormat.parse(state.latestExchange.date);
-          final outputFormat = DateFormat('hh:mm - dd/MM/yyyy');
-          final outputDate = outputFormat.format(inputDate);
-
           return Column(
             children: [
               Container(
@@ -60,7 +55,7 @@ class LatestContent extends StatelessWidget {
                 margin:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 child: Text(
-                  'Last time updated: $outputDate',
+                  'Last time updated: ${state.latestExchange.date.toDisplayDate()}',
                 ),
               ),
               Expanded(
