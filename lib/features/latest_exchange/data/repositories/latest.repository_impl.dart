@@ -17,7 +17,7 @@ class LatestRepository extends ILatestRepository {
   @override
   Future<Either<BaseException, LatestExchange>> getRemoteLatest() async {
     try {
-      return Right(await remote.getLatest());
+      return Right(await remote.getLatestExchange());
     } on RequestFailException catch (e) {
       final localExchange = await local.getLatestExchange();
 
@@ -34,7 +34,7 @@ class LatestRepository extends ILatestRepository {
   @override
   Future<Either<BaseException, LatestExchange>> getLocalLatest() async {
     try {
-      return Right(await local.getLatestExchange() ?? await remote.getLatest());
+      return Right(await local.getLatestExchange() ?? await remote.getLatestExchange());
     } on RequestFailException catch (e) {
       return Left(e);
     } on GenericException catch (e) {

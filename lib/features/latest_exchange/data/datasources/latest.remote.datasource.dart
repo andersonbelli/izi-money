@@ -4,7 +4,7 @@ import 'package:izi_money/features/latest_exchange/data/models/latest_exchange.m
 import 'package:izi_money/features/latest_exchange/data/models/rates.model.dart';
 
 abstract class ILatestRemoteDataSource {
-  Future<LatestExchangeModel> getLatest();
+  Future<LatestExchangeModel> getLatestExchange();
 }
 
 class LatestRemoteDataSource extends ILatestRemoteDataSource {
@@ -13,7 +13,7 @@ class LatestRemoteDataSource extends ILatestRemoteDataSource {
   LatestRemoteDataSource({required this.http});
 
   @override
-  Future<LatestExchangeModel> getLatest() async {
+  Future<LatestExchangeModel> getLatestExchange() async {
     if (http.mock) {
       return LatestExchangeModel(
         success: true,
