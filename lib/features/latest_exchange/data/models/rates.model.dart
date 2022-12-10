@@ -5,7 +5,7 @@ part 'rates.model.g.dart';
 
 @JsonSerializable()
 class RatesModel extends Rates {
-  RatesModel({
+  const RatesModel({
     double? BRL,
     double? BTC,
     double? CLP,
@@ -26,7 +26,9 @@ class RatesModel extends Rates {
 
   Map<String, dynamic> toJson() => _$RatesModelToJson(this);
 
-  factory RatesModel.fromRates(Rates rates) {
+  factory RatesModel.fromRates(Rates? rates) {
+    if (rates == null) return const RatesModel();
+
     return RatesModel(
       USD: rates.USD,
       MXN: rates.MXN,

@@ -13,7 +13,7 @@ class LatestExchangeModel extends LatestExchange {
     required bool success,
     required String base,
     required String date,
-    required this.ratesModel,
+    this.ratesModel = const RatesModel(),
   }) : super(
           success: success,
           base: base,

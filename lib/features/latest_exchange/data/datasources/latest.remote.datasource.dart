@@ -3,14 +3,14 @@ import 'package:izi_money/core/utils/server_config.dart';
 import 'package:izi_money/features/latest_exchange/data/models/latest_exchange.model.dart';
 import 'package:izi_money/features/latest_exchange/data/models/rates.model.dart';
 
-abstract class ILatestDataSource {
+abstract class ILatestRemoteDataSource {
   Future<LatestExchangeModel> getLatest();
 }
 
-class LatestDataSource extends ILatestDataSource {
+class LatestRemoteDataSource extends ILatestRemoteDataSource {
   final HttpManager http;
 
-  LatestDataSource({required this.http});
+  LatestRemoteDataSource({required this.http});
 
   @override
   Future<LatestExchangeModel> getLatest() async {
@@ -19,7 +19,7 @@ class LatestDataSource extends ILatestDataSource {
         success: true,
         base: 'EUR',
         date: '2022-12-03 12:25:19.922692',
-        ratesModel: RatesModel(
+        ratesModel: const RatesModel(
           BRL: 5.506377,
           BTC: 0.000062,
           CLP: 920.346155,
