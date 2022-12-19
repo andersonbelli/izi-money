@@ -19,9 +19,18 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: AppColors.mainColor,
+        canvasColor: Colors.transparent,
       ),
-      home: const Scaffold(
-        body: LatestPage(),
+      home: Scaffold(
+        body: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/background/background2.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: const LatestPage(),
+        ),
       ),
     );
   }

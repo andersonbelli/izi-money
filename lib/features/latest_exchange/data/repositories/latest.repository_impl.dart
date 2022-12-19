@@ -15,9 +15,11 @@ class LatestRepository extends ILatestRepository {
   LatestRepository(this.remote, this.local);
 
   @override
-  Future<Either<BaseException, LatestExchange>> getRemoteLatest() async {
+  Future<Either<BaseException, LatestExchange>> getRemoteLatest({
+    String base = 'USD',
+  }) async {
     try {
-      return Right(await remote.getLatestExchange());
+      return Right(await remote.getLatestExchange(base));
     } on RequestFailException catch (e) {
       final localExchange = await local.getLatestExchange();
 
@@ -32,9 +34,12 @@ class LatestRepository extends ILatestRepository {
   }
 
   @override
-  Future<Either<BaseException, LatestExchange>> getLocalLatest() async {
+  Future<Either<BaseException, LatestExchange>> getLocalLatest({
+    String base = 'USD',
+  }) async {
     try {
-      return Right(await local.getLatestExchange() ?? await remote.getLatestExchange());
+      return Right(await local.getLatestExchange() ??
+          await remote.getLatestExchange(base));
     } on RequestFailException catch (e) {
       return Left(e);
     } on GenericException catch (e) {

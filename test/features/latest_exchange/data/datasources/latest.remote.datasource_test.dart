@@ -9,6 +9,7 @@ import 'latest.remote.datasource_test.mocks.dart';
 
 @GenerateMocks([ILatestRemoteDataSource])
 void main() {
+  const String base = 'USD';
   late MockILatestRemoteDataSource latestDataSource;
 
   setUp(() {
@@ -19,15 +20,15 @@ void main() {
       'Should request getLatest and'
       'verify it returns a instance of LatestExchangeModel', () async {
     // Arrange
-    when(latestDataSource.getLatestExchange()).thenAnswer(
+    when(latestDataSource.getLatestExchange(base)).thenAnswer(
       (realInvocation) async => MockLatestExchangeModel.mock,
     );
 
     // Act
-    var result = await latestDataSource.getLatestExchange();
+    var result = await latestDataSource.getLatestExchange(base);
 
     // Assert
-    verify(latestDataSource.getLatestExchange()).called(1);
+    verify(latestDataSource.getLatestExchange(base)).called(1);
     expect(result, isInstanceOf<LatestExchangeModel>());
   });
 }

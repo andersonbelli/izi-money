@@ -4,7 +4,9 @@ import 'package:izi_money/features/latest_exchange/data/models/latest_exchange.m
 import 'package:izi_money/features/latest_exchange/data/models/rates.model.dart';
 
 abstract class ILatestRemoteDataSource {
-  Future<LatestExchangeModel> getLatestExchange();
+  Future<LatestExchangeModel> getLatestExchange(String base);
+
+  Future<RatesModel> getNewCurrency(String currency);
 }
 
 class LatestRemoteDataSource extends ILatestRemoteDataSource {
@@ -13,28 +15,37 @@ class LatestRemoteDataSource extends ILatestRemoteDataSource {
   LatestRemoteDataSource({required this.http});
 
   @override
-  Future<LatestExchangeModel> getLatestExchange() async {
+  Future<LatestExchangeModel> getLatestExchange(String base) async {
     if (http.mock) {
       return LatestExchangeModel(
         success: true,
-        base: 'EUR',
+        base: 'USD',
         date: '2022-12-03 12:25:19.922692',
         ratesModel: const RatesModel(
           BRL: 5.506377,
           BTC: 0.000062,
           CLP: 920.346155,
-          EUR: 1,
+          EUR: 0.95,
           MXN: 19.954985,
-          USD: 1.033599,
+          USD: 1,
         ),
       );
     }
 
-    final response = await http.get(ServerConfig.LATEST_ENDPOINT);
+    final response =
+        await http.get('${ServerConfig.LATEST_ENDPOINT}base=$base');
 
     (response as Map<String, dynamic>)
         .update('date', (value) => DateTime.now().toString());
     return LatestExchangeModel.fromJson(response);
+  }
+
+  @override
+  Future<RatesModel> getNewCurrency(String currency) async {
+    final response =
+        await http.get('${ServerConfig.LATEST_ENDPOINT}symbols=$currency');
+
+    return RatesModel.fromJson((response as Map<String, dynamic>));
   }
 }
 

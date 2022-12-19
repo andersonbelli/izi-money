@@ -8,6 +8,7 @@ import 'package:izi_money/features/latest_exchange/domain/usecases/get_local_lat
 import 'package:izi_money/features/latest_exchange/domain/usecases/get_remote_latest.use_case.dart';
 import 'package:izi_money/features/latest_exchange/domain/usecases/save_latest.use_case.dart';
 import 'package:izi_money/features/latest_exchange/presentation/pages/latest.bloc.dart';
+import 'package:izi_money/features/latest_exchange/presentation/pages/latest/widgets/search/search.bloc.dart';
 
 class LatestDI implements BaseDI {
   @override
@@ -45,6 +46,9 @@ class LatestDI implements BaseDI {
     // Bloc
     di.registerSingleton<LatestBloc>(
       LatestBloc(di(), di()),
+    );
+    di.registerSingleton<SearchBloc>(
+      SearchBloc(),
     );
   }
 }

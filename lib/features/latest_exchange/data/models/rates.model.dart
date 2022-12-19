@@ -9,9 +9,9 @@ class RatesModel extends Rates {
     double? BRL,
     double? BTC,
     double? CLP,
-    int? EUR,
+    double? EUR,
     double? MXN,
-    double? USD,
+    int? USD,
   }) : super(
           BRL: BRL,
           BTC: BTC,

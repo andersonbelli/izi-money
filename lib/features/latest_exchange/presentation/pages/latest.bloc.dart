@@ -10,6 +10,8 @@ part 'latest.event.dart';
 part 'latest.state.dart';
 
 class LatestBloc extends Bloc<LatestEvent, LatestState> {
+  List<MapEntry<String, dynamic>> ratesList = [];
+
   final IGetRemoteLatestUseCase getLatestUseCase;
   final ISaveLatestUseCase saveLatestUseCase;
 
@@ -41,8 +43,6 @@ class LatestBloc extends Bloc<LatestEvent, LatestState> {
   }
 
   List<MapEntry<String, dynamic>> createRatesList(Rates rates) {
-    List<MapEntry<String, dynamic>> ratesList = [];
-
     for (var rate in RatesModel.fromRates(rates).toJson().entries) {
       if (rate.value != null) ratesList.add(rate);
     }

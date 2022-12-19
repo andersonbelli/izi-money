@@ -16,12 +16,13 @@ dependencies:
   bloc: ^8.1.0
   flutter_bloc: ^8.1.1
   dio: ^4.0.6
-  sqflite: ^2.2.0+3
+  sqflite: ^2.2.2
   dartz: ^0.10.1
   get_it: ^7.2.0
   json_annotation: ^4.7.0
   intl: ^0.17.0
   shared_preferences: ^2.0.15
+  meta: ^1.8.0
 
 dev_dependencies:
   flutter_test:
@@ -37,6 +38,9 @@ flutter:
 
   assets:
     - assets/flags/
+    - assets/background/background2.jpg
+
+    - assets/currencies.json
 
   # fonts:
   #   - family: Schyler

@@ -45,7 +45,7 @@ class Rates {
   final double? eGP;
   final double? eRN;
   final double? eTB;
-  final int? EUR;
+  final double? EUR;
   final double? fJD;
   final double? fKP;
   final double? gBP;
@@ -148,7 +148,7 @@ class Rates {
   final double? tZS;
   final double? uAH;
   final double? uGX;
-  final double? USD;
+  final int? USD;
   final double? uYU;
   final double? uZS;
   final double? vES;
