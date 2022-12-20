@@ -24,15 +24,6 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
       emit(SearchResultsState(result));
     });
-    on<SearchCurrencyEvent>((event, emit) {
-      emit(LoadingState());
-
-      final result = currencies
-          .where((currency) => currency.contains(event.searchCurrency))
-          .toList();
-
-      emit(SearchResultsState(result));
-    });
   }
 
   Future<List<String>> loadCurrencies() async {
