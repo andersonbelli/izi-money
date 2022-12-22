@@ -7,6 +7,8 @@ class LatestInitialState extends LatestState {}
 
 class LatestLoadingState extends LatestState {}
 
+class NoCurrenciesAddedYetState extends LatestState {}
+
 class LatestGetLatestExchangesState extends LatestState {}
 
 class LatestErrorState extends LatestState {

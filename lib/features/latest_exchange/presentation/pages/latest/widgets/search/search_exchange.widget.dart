@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:izi_money/di/injector.di.dart';
+import 'package:izi_money/features/latest_exchange/presentation/pages/latest.bloc.dart';
 import 'package:izi_money/features/latest_exchange/presentation/pages/latest/widgets/search/search.bloc.dart';
 
 class SearchExchange extends SearchDelegate {
@@ -25,7 +26,9 @@ class SearchExchange extends SearchDelegate {
   Widget? buildLeading(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.arrow_back),
-      onPressed: () => close(context, null),
+      onPressed: () {
+        close(context, null);
+      },
     );
   }
 
@@ -102,7 +105,17 @@ class SearchItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(currencyName),
-      trailing: const Icon(Icons.add),
+      trailing: IconButton(
+        icon: const Icon(Icons.add),
+        onPressed: () {
+          Injector.di<SearchBloc>().add(
+            LoadCurrencyEvent(),
+          );
+          Injector.di<LatestBloc>().add(
+            AddCurrencyEvent(currencyName),
+          );
+        },
+      ),
     );
   }
 }

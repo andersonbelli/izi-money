@@ -14,11 +14,8 @@ class LatestPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => Injector.di.get<LatestBloc>(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Latest Exchange'),
-        ),
-        body: const LatestContent(),
+      child: const Scaffold(
+        body: SafeArea(child: LatestContent()),
       ),
     );
   }
@@ -47,6 +44,43 @@ class LatestContent extends StatelessWidget {
               'There was an error 😔 \n ${state.message}',
               style: Theme.of(context).textTheme.headlineSmall,
               textAlign: TextAlign.center,
+            ),
+          );
+        }
+        if (state is NoCurrenciesAddedYetState) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () => showSearch(
+                      context: context,
+                      delegate: SearchExchange(),
+                      useRootNavigator: false,
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                        Colors.black54,
+                      ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                      ),
+                      padding: MaterialStateProperty.all<EdgeInsets>(
+                        const EdgeInsets.all(16),
+                      ),
+                    ),
+                    child: Text(
+                      'Click to add new currency',
+                      style: Theme.of(context).textTheme.headline6,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
             ),
           );
         }
@@ -179,7 +213,6 @@ class CurrencyItem extends StatelessWidget {
                         errorBuilder: (_, __, ___) {
                           return Image.asset(
                             'assets/flags/placeholder.png',
-                            width: 35,
                           );
                         },
                       ),

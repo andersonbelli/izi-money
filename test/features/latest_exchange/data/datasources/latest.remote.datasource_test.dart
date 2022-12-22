@@ -20,15 +20,15 @@ void main() {
       'Should request getLatest and'
       'verify it returns a instance of LatestExchangeModel', () async {
     // Arrange
-    when(latestDataSource.getLatestExchange(base)).thenAnswer(
+    when(latestDataSource.getLatestExchange(base: base, [])).thenAnswer(
       (realInvocation) async => MockLatestExchangeModel.mock,
     );
 
     // Act
-    var result = await latestDataSource.getLatestExchange(base);
+    var result = await latestDataSource.getLatestExchange(base: base, []);
 
     // Assert
-    verify(latestDataSource.getLatestExchange(base)).called(1);
+    verify(latestDataSource.getLatestExchange(base: base, [])).called(1);
     expect(result, isInstanceOf<LatestExchangeModel>());
   });
 }

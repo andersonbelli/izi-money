@@ -9,8 +9,4 @@ class SearchCurrencyEvent extends SearchEvent {
   SearchCurrencyEvent(this.searchCurrency);
 }
 
-class AddCurrencyEvent extends SearchEvent {
-  final String newCurrency;
-
-  AddCurrencyEvent(this.newCurrency);
-}
+class LoadCurrencyEvent extends SearchEvent {}

@@ -5,6 +5,7 @@ import 'package:izi_money/features/latest_exchange/data/datasources/latest.remot
 import 'package:izi_money/features/latest_exchange/data/repositories/latest.repository_impl.dart';
 import 'package:izi_money/features/latest_exchange/domain/repositories/latest.repository.dart';
 import 'package:izi_money/features/latest_exchange/domain/usecases/get_local_latest.use_case.dart';
+import 'package:izi_money/features/latest_exchange/domain/usecases/get_new_currency.use_case.dart';
 import 'package:izi_money/features/latest_exchange/domain/usecases/get_remote_latest.use_case.dart';
 import 'package:izi_money/features/latest_exchange/domain/usecases/save_latest.use_case.dart';
 import 'package:izi_money/features/latest_exchange/presentation/pages/latest.bloc.dart';
@@ -42,13 +43,16 @@ class LatestDI implements BaseDI {
     di.registerFactory<ISaveLatestUseCase>(
       () => SaveLatestUseCase(di()),
     );
+    di.registerFactory<IGetNewCurrencyUseCase>(
+      () => GetNewCurrencyUseCase(di()),
+    );
 
     // Bloc
     di.registerSingleton<LatestBloc>(
-      LatestBloc(di(), di()),
+      LatestBloc(di(), di(), di(), di()),
     );
     di.registerSingleton<SearchBloc>(
-      SearchBloc(),
+      SearchBloc(di()),
     );
   }
 }

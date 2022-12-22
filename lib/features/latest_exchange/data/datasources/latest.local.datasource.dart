@@ -7,7 +7,8 @@ abstract class ILatestLocalDataSource {
   Future<LatestExchangeModel?> getLatestExchange();
 
   Future<LatestExchangeModel> saveLatestExchange(
-      LatestExchangeModel latestExchangeModel);
+    LatestExchangeModel latestExchangeModel,
+  );
 }
 
 class LatestLocalDataSource extends ILatestLocalDataSource {

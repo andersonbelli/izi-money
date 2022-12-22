@@ -4,7 +4,7 @@ import 'package:izi_money/features/latest_exchange/domain/entities/latest_exchan
 import 'package:izi_money/features/latest_exchange/domain/repositories/latest.repository.dart';
 
 abstract class IGetLocalLatestUseCase {
-  Future<Either<BaseException, LatestExchange>> call();
+  Future<Either<BaseException, LatestExchange?>> call();
 }
 
 class GetLocalLatestUseCase extends IGetLocalLatestUseCase {
@@ -13,6 +13,6 @@ class GetLocalLatestUseCase extends IGetLocalLatestUseCase {
   GetLocalLatestUseCase(this.repository);
 
   @override
-  Future<Either<BaseException, LatestExchange>> call() =>
-      repository.getRemoteLatest();
+  Future<Either<BaseException, LatestExchange?>> call() =>
+      repository.getLocalLatest();
 }

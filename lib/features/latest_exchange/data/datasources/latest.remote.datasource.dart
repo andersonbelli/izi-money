@@ -4,9 +4,8 @@ import 'package:izi_money/features/latest_exchange/data/models/latest_exchange.m
 import 'package:izi_money/features/latest_exchange/data/models/rates.model.dart';
 
 abstract class ILatestRemoteDataSource {
-  Future<LatestExchangeModel> getLatestExchange(String base);
-
-  Future<RatesModel> getNewCurrency(String currency);
+  Future<LatestExchangeModel> getLatestExchange(List<String> userCurrencies,
+      {String base = 'USD'});
 }
 
 class LatestRemoteDataSource extends ILatestRemoteDataSource {
@@ -15,7 +14,10 @@ class LatestRemoteDataSource extends ILatestRemoteDataSource {
   LatestRemoteDataSource({required this.http});
 
   @override
-  Future<LatestExchangeModel> getLatestExchange(String base) async {
+  Future<LatestExchangeModel> getLatestExchange(
+    List<String> userCurrencies, {
+    String base = 'USD',
+  }) async {
     if (http.mock) {
       return LatestExchangeModel(
         success: true,
@@ -32,20 +34,12 @@ class LatestRemoteDataSource extends ILatestRemoteDataSource {
       );
     }
 
-    final response =
-        await http.get('${ServerConfig.LATEST_ENDPOINT}base=$base');
+    final response = await http.get(
+        '${ServerConfig.LATEST_ENDPOINT}base=$base&symbols=${userCurrencies.join(',')}');
 
     (response as Map<String, dynamic>)
         .update('date', (value) => DateTime.now().toString());
     return LatestExchangeModel.fromJson(response);
-  }
-
-  @override
-  Future<RatesModel> getNewCurrency(String currency) async {
-    final response =
-        await http.get('${ServerConfig.LATEST_ENDPOINT}symbols=$currency');
-
-    return RatesModel.fromJson((response as Map<String, dynamic>));
   }
 }
 
