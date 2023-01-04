@@ -68,6 +68,6 @@ class LatestRepository extends ILatestRepository {
   }
 
   @override
-  Future<LatestExchange> saveLatest(LatestExchange exchange) => local
+  Future<LatestExchange> saveLatest(LatestExchange exchange) async => await local
       .saveLatestExchange(LatestExchangeModel.fromLatestExchange(exchange));
 }

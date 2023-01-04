@@ -10,7 +10,7 @@ class LoadingState extends SearchState {}
 class CurrenciesLoadedState extends SearchState {}
 
 class SearchResultsState extends SearchState {
-  final List<String> results;
+  final List<SearchCurrencyItem> results;
 
   SearchResultsState(this.results);
 }

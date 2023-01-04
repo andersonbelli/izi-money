@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:izi_money/di/injector.di.dart';
+import 'package:izi_money/features/latest_exchange/data/models/search_currency_item.dart';
 import 'package:izi_money/features/latest_exchange/presentation/pages/latest.bloc.dart';
 import 'package:izi_money/features/latest_exchange/presentation/pages/latest/widgets/search/search.bloc.dart';
 
@@ -56,7 +57,8 @@ class SearchExchange extends SearchDelegate {
             itemCount: result.length,
             itemBuilder: (context, i) {
               return SearchItem(
-                currencyName: result[i],
+                currencyName: result[i].name,
+                currencyStatus: result[i].status,
               );
             },
           );
@@ -73,7 +75,8 @@ class SearchExchange extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final List<String> currencies = Injector.di<SearchBloc>().currencies;
+    final List<SearchCurrencyItem> currencies =
+        Injector.di<SearchBloc>().searchCurrencyItems;
 
     return BlocBuilder<SearchBloc, SearchState>(
       bloc: Injector.di<SearchBloc>(),
@@ -83,13 +86,22 @@ class SearchExchange extends SearchDelegate {
             child: CircularProgressIndicator(),
           );
         }
-        return ListView.builder(
-          itemCount: currencies.length,
-          itemBuilder: (context, i) {
-            return SearchItem(
-              currencyName: currencies[i],
-            );
-          },
+        if (state is CurrenciesLoadedState) {
+          return ListView.builder(
+            itemCount: currencies.length,
+            itemBuilder: (context, i) {
+              return SearchItem(
+                currencyName: currencies[i].name,
+                currencyStatus: currencies[i].status,
+              );
+            },
+          );
+        }
+        return Center(
+          child: Text(
+            'No currencies available',
+            style: Theme.of(context).textTheme.headline6,
+          ),
         );
       },
     );
@@ -98,21 +110,27 @@ class SearchExchange extends SearchDelegate {
 
 class SearchItem extends StatelessWidget {
   final String currencyName;
+  final bool currencyStatus;
 
-  const SearchItem({Key? key, required this.currencyName}) : super(key: key);
+  const SearchItem({
+    Key? key,
+    required this.currencyName,
+    required this.currencyStatus,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(currencyName),
       trailing: IconButton(
-        icon: const Icon(Icons.add),
+        icon:
+            currencyStatus ? const Icon(Icons.bookmark) : const Icon(Icons.add),
         onPressed: () {
-          Injector.di<SearchBloc>().add(
-            LoadCurrencyEvent(),
-          );
           Injector.di<LatestBloc>().add(
             AddCurrencyEvent(currencyName),
+          );
+          Injector.di<SearchBloc>().add(
+            LoadCurrencyEvent(),
           );
         },
       ),
