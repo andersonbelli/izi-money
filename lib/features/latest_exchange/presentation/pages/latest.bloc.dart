@@ -92,7 +92,8 @@ class LatestBloc extends Bloc<LatestEvent, LatestState> {
             emit(LatestErrorState(message: '$failure'));
           },
           (newCurrencyList) {
-            saveLocalCurrenciesUseCase(newCurrencyList);
+            saveLocalCurrenciesUseCase(newCurrencyList).whenComplete(
+                () => Injector.di<SearchBloc>().add(LoadCurrencyEvent()));
 
             emit(
               LatestExchangeState(
@@ -100,18 +101,13 @@ class LatestBloc extends Bloc<LatestEvent, LatestState> {
                 rates: createRatesList(newCurrencyList.rates),
               ),
             );
-            if (emit.isDone) {
-              Injector.di<SearchBloc>().add(LoadCurrencyEvent());
-            }
           },
         );
       } else {
-        clearLocalCurrencies();
+        clearLocalCurrencies().whenComplete(
+            () => Injector.di<SearchBloc>().add(LoadCurrencyEvent()));
 
         emit(NoCurrenciesAddedYetState());
-        if (emit.isDone) {
-          Injector.di<SearchBloc>().add(LoadCurrencyEvent());
-        }
       }
     });
     add(GetUserCurrenciesEvent());
