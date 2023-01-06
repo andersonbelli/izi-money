@@ -6,9 +6,11 @@ import 'package:izi_money/features/latest_exchange/data/models/latest_exchange.m
 abstract class ILatestLocalDataSource {
   Future<LatestExchangeModel?> getLatestExchange();
 
-  Future<LatestExchangeModel> saveLatestExchange(
+  Future<LatestExchangeModel> saveLocalCurrencies(
     LatestExchangeModel latestExchangeModel,
   );
+
+  Future<bool> clearLocalCurrencies();
 }
 
 class LatestLocalDataSource extends ILatestLocalDataSource {
@@ -30,10 +32,13 @@ class LatestLocalDataSource extends ILatestLocalDataSource {
   }
 
   @override
-  Future<LatestExchangeModel> saveLatestExchange(
+  Future<LatestExchangeModel> saveLocalCurrencies(
       LatestExchangeModel latestExchangeModel) async {
     await storage.save(_latestKey, jsonEncode(latestExchangeModel));
 
     return latestExchangeModel;
   }
+
+  @override
+  Future<bool> clearLocalCurrencies() async => await storage.remove(_latestKey);
 }

@@ -1,21 +1,26 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
+import 'package:izi_money/di/injector.di.dart';
 import 'package:izi_money/features/latest_exchange/data/models/rates.model.dart';
 import 'package:izi_money/features/latest_exchange/domain/entities/latest_exchange.entity.dart';
 import 'package:izi_money/features/latest_exchange/domain/entities/rates.entity.dart';
-import 'package:izi_money/features/latest_exchange/domain/usecases/get_local_latest.use_case.dart';
+import 'package:izi_money/features/latest_exchange/domain/usecases/clear_local_currencies.use_case.dart';
+import 'package:izi_money/features/latest_exchange/domain/usecases/get_local_currencies.use_case.dart';
 import 'package:izi_money/features/latest_exchange/domain/usecases/get_new_currency.use_case.dart';
 import 'package:izi_money/features/latest_exchange/domain/usecases/get_remote_latest.use_case.dart';
-import 'package:izi_money/features/latest_exchange/domain/usecases/save_latest.use_case.dart';
+import 'package:izi_money/features/latest_exchange/domain/usecases/save_local_currencies.use_case.dart';
+import 'package:izi_money/features/latest_exchange/presentation/pages/latest/widgets/search/search.bloc.dart';
 
 part 'latest.event.dart';
+
 part 'latest.state.dart';
 
 class LatestBloc extends Bloc<LatestEvent, LatestState> {
   final IGetRemoteLatestUseCase getLatestUseCase;
   final IGetNewCurrencyUseCase getNewCurrencyUseCase;
-  final ISaveLatestUseCase saveLatestUseCase;
-  final IGetLocalLatestUseCase getLocalLatestUseCase;
+  final ISaveLocalCurrenciesUseCase saveLocalCurrenciesUseCase;
+  final IGetLocalCurrenciesUseCase getLocalCurrenciesUseCase;
+  final IClearLocalCurrenciesUseCase clearLocalCurrencies;
 
   List<MapEntry<String, dynamic>> ratesList = [];
   final List<String> _userCurrencies = [];
@@ -23,12 +28,13 @@ class LatestBloc extends Bloc<LatestEvent, LatestState> {
 
   LatestBloc(
     this.getLatestUseCase,
-    this.saveLatestUseCase,
+    this.saveLocalCurrenciesUseCase,
     this.getNewCurrencyUseCase,
-    this.getLocalLatestUseCase,
+    this.getLocalCurrenciesUseCase,
+    this.clearLocalCurrencies,
   ) : super(LatestInitialState()) {
     on<GetUserCurrenciesEvent>((event, emit) async {
-      final getLocalLatestResult = await getLocalLatestUseCase();
+      final getLocalLatestResult = await getLocalCurrenciesUseCase();
 
       getLocalLatestResult.fold(
         (failure) => emit(LatestErrorState(message: '$failure')),
@@ -69,28 +75,44 @@ class LatestBloc extends Bloc<LatestEvent, LatestState> {
     on<AddCurrencyEvent>((event, emit) async {
       emit(LatestLoadingState());
 
-      _userCurrencies.add(event.newCurrency);
+      if (_userCurrencies.contains(event.newCurrency)) {
+        _userCurrencies.remove(event.newCurrency);
+      } else {
+        _userCurrencies.add(event.newCurrency);
+      }
 
-      final newCurrencyData = await getNewCurrencyUseCase(
-        _userBase,
-        _userCurrencies,
-      );
+      if (_userCurrencies.isNotEmpty) {
+        final newCurrencyData = await getNewCurrencyUseCase(
+          'USD', // TODO change user base currency
+          _userCurrencies,
+        );
 
-      newCurrencyData.fold(
-        (failure) {
-          emit(LatestErrorState(message: '$failure'));
-        },
-        (newCurrencyList) {
-          saveLatestUseCase(newCurrencyList);
+        newCurrencyData.fold(
+          (failure) {
+            emit(LatestErrorState(message: '$failure'));
+          },
+          (newCurrencyList) {
+            saveLocalCurrenciesUseCase(newCurrencyList);
 
-          emit(
-            LatestExchangeState(
-              latestExchange: newCurrencyList,
-              rates: createRatesList(newCurrencyList.rates),
-            ),
-          );
-        },
-      );
+            emit(
+              LatestExchangeState(
+                latestExchange: newCurrencyList,
+                rates: createRatesList(newCurrencyList.rates),
+              ),
+            );
+            if (emit.isDone) {
+              Injector.di<SearchBloc>().add(LoadCurrencyEvent());
+            }
+          },
+        );
+      } else {
+        clearLocalCurrencies();
+
+        emit(NoCurrenciesAddedYetState());
+        if (emit.isDone) {
+          Injector.di<SearchBloc>().add(LoadCurrencyEvent());
+        }
+      }
     });
     add(GetUserCurrenciesEvent());
   }

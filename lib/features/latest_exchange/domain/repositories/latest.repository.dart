@@ -13,9 +13,11 @@ abstract class ILatestRepository {
     List<String> newCurrencyList,
   );
 
-  Future<Either<BaseException, LatestExchange?>> getLocalLatest();
+  Future<Either<BaseException, LatestExchange?>> getLocalCurrencies();
 
-  Future<LatestExchange> saveLatest(
+  Future<LatestExchange> saveLocalCurrencies(
     LatestExchange exchange,
   );
+
+  Future<bool> clearLocalCurrencies();
 }

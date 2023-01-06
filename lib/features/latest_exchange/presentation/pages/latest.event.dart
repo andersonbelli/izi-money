@@ -11,4 +11,10 @@ class AddCurrencyEvent extends LatestEvent {
   AddCurrencyEvent(this.newCurrency);
 }
 
+class RemoveCurrencyEvent extends LatestEvent {
+  final String newCurrency;
+
+  RemoveCurrencyEvent(this.newCurrency);
+}
+
 class GetUserCurrenciesEvent extends LatestEvent {}

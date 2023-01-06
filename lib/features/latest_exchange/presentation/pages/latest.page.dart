@@ -40,10 +40,18 @@ class LatestContent extends StatelessWidget {
         }
         if (state is LatestErrorState) {
           return Center(
-            child: Text(
-              'There was an error 😔 \n ${state.message}',
-              style: Theme.of(context).textTheme.headlineSmall,
+            child: RichText(
+              softWrap: true,
               textAlign: TextAlign.center,
+              text: TextSpan(
+                  style: Theme.of(context).textTheme.headline6,
+                  children: [
+                    const TextSpan(text: 'There was an error 😔\n'),
+                    const TextSpan(text: 'Please try again.\n\n'),
+                    TextSpan(
+                        text: state.message,
+                        style: Theme.of(context).textTheme.bodyMedium),
+                  ]),
             ),
           );
         }
@@ -208,14 +216,7 @@ class CurrencyItem extends StatelessWidget {
                   child: Center(
                     child: Container(
                       padding: const EdgeInsets.all(32),
-                      child: Image.asset(
-                        'assets/flags/${title.toLowerCase()}.png',
-                        errorBuilder: (_, __, ___) {
-                          return Image.asset(
-                            'assets/flags/placeholder.png',
-                          );
-                        },
-                      ),
+                      child: CurrencyImage(title),
                     ),
                   ),
                 ),
@@ -247,6 +248,24 @@ class CurrencyItem extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class CurrencyImage extends StatelessWidget {
+  final String imageName;
+
+  const CurrencyImage(this.imageName, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      'assets/flags/${imageName.toLowerCase()}.png',
+      errorBuilder: (_, __, ___) {
+        return Image.asset(
+          'assets/flags/placeholder.png',
+        );
+      },
     );
   }
 }

@@ -129,11 +129,25 @@ class SearchItem extends StatelessWidget {
           Injector.di<LatestBloc>().add(
             AddCurrencyEvent(currencyName),
           );
-          Injector.di<SearchBloc>().add(
-            LoadCurrencyEvent(),
-          );
+          SnackBar snackBar;
+          if (currencyStatus) {
+            snackBar = searchSnackBar('$currencyName removed from list');
+          } else {
+            snackBar = searchSnackBar('$currencyName added to list');
+          }
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
         },
       ),
     );
   }
 }
+
+SnackBar searchSnackBar(String message) => SnackBar(
+      content: Text(
+        message,
+        textAlign: TextAlign.center,
+      ),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10))),
+      behavior: SnackBarBehavior.floating,
+    );

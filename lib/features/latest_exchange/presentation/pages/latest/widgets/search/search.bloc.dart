@@ -4,14 +4,14 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:izi_money/features/latest_exchange/data/models/rates.model.dart';
 import 'package:izi_money/features/latest_exchange/data/models/search_currency_item.dart';
-import 'package:izi_money/features/latest_exchange/domain/usecases/get_local_latest.use_case.dart';
+import 'package:izi_money/features/latest_exchange/domain/usecases/get_local_currencies.use_case.dart';
 import 'package:meta/meta.dart';
 
 part 'search.event.dart';
 part 'search.state.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
-  final IGetLocalLatestUseCase getLocalLatestUseCase;
+  final IGetLocalCurrenciesUseCase getLocalLatestUseCase;
 
   List<SearchCurrencyItem> searchCurrencyItems = [];
 
@@ -38,6 +38,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   Future<List<SearchCurrencyItem>> loadCurrencies() async {
+    searchCurrencyItems.clear();
+
     final getLocalLatestResult = await getLocalLatestUseCase();
 
     List<String> currencies = jsonDecode(

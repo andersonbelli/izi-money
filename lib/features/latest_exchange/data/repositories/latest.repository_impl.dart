@@ -38,7 +38,7 @@ class LatestRepository extends ILatestRepository {
   }
 
   @override
-  Future<Either<BaseException, LatestExchange?>> getLocalLatest({
+  Future<Either<BaseException, LatestExchange?>> getLocalCurrencies({
     String base = 'USD',
   }) async {
     try {
@@ -53,7 +53,7 @@ class LatestRepository extends ILatestRepository {
   @override
   Future<Either<BaseException, LatestExchange>> addNewCurrency(
     String base,
-      List<String> newCurrencyList,
+    List<String> newCurrencyList,
   ) async {
     try {
       return Right(await remote.getLatestExchange(
@@ -68,6 +68,11 @@ class LatestRepository extends ILatestRepository {
   }
 
   @override
-  Future<LatestExchange> saveLatest(LatestExchange exchange) async => await local
-      .saveLatestExchange(LatestExchangeModel.fromLatestExchange(exchange));
+  Future<LatestExchange> saveLocalCurrencies(LatestExchange exchange) async =>
+      await local.saveLocalCurrencies(
+          LatestExchangeModel.fromLatestExchange(exchange));
+
+  @override
+  Future<bool> clearLocalCurrencies() async =>
+      await local.clearLocalCurrencies();
 }

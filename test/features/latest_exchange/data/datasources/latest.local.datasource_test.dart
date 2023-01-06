@@ -19,17 +19,17 @@ void main() {
       'Should save LatestExchange and'
       'verify it returns a instance of LatestExchangeModel', () async {
     // Arrange
-    when(latestDataSource.saveLatestExchange(MockLatestExchangeModel.mock))
+    when(latestDataSource.saveLocalCurrencies(MockLatestExchangeModel.mock))
         .thenAnswer(
       (realInvocation) async => MockLatestExchangeModel.mock,
     );
 
     // Act
     var result =
-        await latestDataSource.saveLatestExchange(MockLatestExchangeModel.mock);
+        await latestDataSource.saveLocalCurrencies(MockLatestExchangeModel.mock);
 
     // Assert
-    verify(latestDataSource.saveLatestExchange(MockLatestExchangeModel.mock))
+    verify(latestDataSource.saveLocalCurrencies(MockLatestExchangeModel.mock))
         .called(1);
     expect(result, isInstanceOf<LatestExchangeModel>());
   });
