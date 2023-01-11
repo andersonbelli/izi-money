@@ -48,7 +48,7 @@ class LatestDI implements BaseDI {
       () => GetNewCurrencyUseCase(di()),
     );
     di.registerFactory<IClearLocalCurrenciesUseCase>(
-          () => ClearLocalCurrenciesUseCase(di()),
+      () => ClearLocalCurrenciesUseCase(di()),
     );
 
     // Bloc
