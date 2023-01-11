@@ -15,18 +15,20 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   List<SearchCurrencyItem> searchCurrencyItems = [];
 
+  String currentLoadingCurrencyItem = '';
+
   SearchBloc(
     this.getLocalLatestUseCase,
   ) : super(SearchInitialState()) {
     on<LoadCurrencyEvent>((event, emit) {
-      emit(LoadingState());
+      emit(SearchLoadingState());
 
       loadCurrencies().then((value) => searchCurrencyItems = value);
 
       emit(CurrenciesLoadedState());
     });
     on<SearchCurrencyEvent>((event, emit) {
-      emit(LoadingState());
+      emit(SearchLoadingState());
 
       final result = searchCurrencyItems
           .where((currency) => currency.name.contains(event.searchCurrency))
@@ -35,6 +37,17 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       emit(SearchResultsState(result));
     });
     add(LoadCurrencyEvent());
+  }
+
+  Future<String> showSnackBar(String currencyName, bool currencyStatus) async {
+    String? message;
+
+    if (currencyStatus) {
+      message = '$currencyName removed from list';
+    } else {
+      message = '$currencyName added to list';
+    }
+    return message;
   }
 
   Future<List<SearchCurrencyItem>> loadCurrencies() async {

@@ -28,13 +28,10 @@ class LatestContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LatestBloc, LatestState>(
       builder: (BuildContext _, state) {
-        if (state is LatestInitialState) {
-          return const Center(child: Text('Nothing to see here 🤔'));
-        }
         if (state is LatestLoadingState) {
           return const Center(
             child: CircularProgressIndicator(
-              color: Colors.white70,
+              color: Colors.black,
             ),
           );
         }
@@ -101,10 +98,13 @@ class LatestContent extends StatelessWidget {
           );
         }
         return Center(
-          child: Text(
-            'You were not supposed to see this 🤔',
-            style: Theme.of(context).textTheme.headlineSmall,
-            textAlign: TextAlign.center,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(
+              'Nothing to see here 🤔',
+              style: Theme.of(context).textTheme.headlineSmall,
+              textAlign: TextAlign.center,
+            ),
           ),
         );
       },
@@ -260,12 +260,16 @@ class CurrencyImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      'assets/flags/${imageName.toLowerCase()}.png',
-      errorBuilder: (_, __, ___) {
-        return Image.asset(
-          'assets/flags/placeholder.png',
-        );
-      },
+      'assets/flags/placeholder.png',
     );
+    // TODO Fix image error
+    // return Image.asset(
+    //   'assets/flags/${imageName.toLowerCase()}.png',
+    //   errorBuilder: (_, __, ___) {
+    //     return Image.asset(
+    //       'assets/flags/placeholder.png',
+    //     );
+    //   },
+    // );
   }
 }

@@ -8,12 +8,12 @@ import 'package:izi_money/features/latest_exchange/di/latest.di.dart';
 class CoreDI implements BaseDI {
   @override
   void registerAll() {
-    // Http
+    /// Http
     Injector.di.registerFactory<HttpManager>(
       () => DioImpl(mock: false),
     );
 
-    // Storage
+    /// Storage
     Injector.di.registerFactory<LocalStorage>(
       () => SharedPreferencesImpl(),
     );

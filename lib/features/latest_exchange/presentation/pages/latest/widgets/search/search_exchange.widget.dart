@@ -35,11 +35,12 @@ class SearchExchange extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
+    final searchBloc = Injector.di<SearchBloc>();
+
     return BlocBuilder<SearchBloc, SearchState>(
-      bloc: Injector.di<SearchBloc>()
-        ..add(SearchCurrencyEvent(query.toUpperCase())),
+      bloc: searchBloc..add(SearchCurrencyEvent(query.toUpperCase())),
       builder: (context, state) {
-        if (state is LoadingState) {
+        if (state is SearchLoadingState) {
           return const CircularProgressIndicator();
         } else if (state is SearchResultsState) {
           final result = state.results;
@@ -53,14 +54,30 @@ class SearchExchange extends SearchDelegate {
             );
           }
 
-          return ListView.builder(
-            itemCount: result.length,
-            itemBuilder: (context, i) {
-              return SearchItem(
-                currencyName: result[i].name,
-                currencyStatus: result[i].status,
-              );
-            },
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider.value(
+                value: searchBloc,
+              ),
+              BlocProvider.value(
+                value: Injector.di<LatestBloc>(),
+              )
+            ],
+            child: ListView.builder(
+              itemCount: result.length,
+              itemBuilder: (context, i) {
+                return SearchItem(
+                  currencyName: result[i].name,
+                  currencyStatus: result[i].status,
+                  loading: (context.watch<LatestBloc>().state
+                              is LatestLoadingState) &&
+                          (searchBloc.currentLoadingCurrencyItem ==
+                              result[i].name)
+                      ? true
+                      : false,
+                );
+              },
+            ),
           );
         }
         return Center(
@@ -75,26 +92,40 @@ class SearchExchange extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final List<SearchCurrencyItem> currencies =
-        Injector.di<SearchBloc>().searchCurrencyItems;
+    final searchBloc = Injector.di<SearchBloc>();
+
+    final List<SearchCurrencyItem> currencies = searchBloc.searchCurrencyItems;
 
     return BlocBuilder<SearchBloc, SearchState>(
-      bloc: Injector.di<SearchBloc>(),
+      bloc: searchBloc,
       builder: (context, state) {
-        if (state is LoadingState) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        if (state is CurrenciesLoadedState) {
-          return ListView.builder(
-            itemCount: currencies.length,
-            itemBuilder: (context, i) {
-              return SearchItem(
-                currencyName: currencies[i].name,
-                currencyStatus: currencies[i].status,
-              );
-            },
+        if (state is SearchLoadingState) {
+          return const CircularProgressIndicator();
+        } else if (state is CurrenciesLoadedState) {
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider.value(
+                value: searchBloc,
+              ),
+              BlocProvider.value(
+                value: Injector.di<LatestBloc>(),
+              )
+            ],
+            child: ListView.builder(
+              itemCount: currencies.length,
+              itemBuilder: (context, i) {
+                return SearchItem(
+                  currencyName: currencies[i].name,
+                  currencyStatus: currencies[i].status,
+                  loading: (context.watch<LatestBloc>().state
+                              is LatestLoadingState) &&
+                          (searchBloc.currentLoadingCurrencyItem ==
+                              currencies[i].name)
+                      ? true
+                      : false,
+                );
+              },
+            ),
           );
         }
         return Center(
@@ -108,35 +139,54 @@ class SearchExchange extends SearchDelegate {
   }
 }
 
-class SearchItem extends StatelessWidget {
+class SearchItem extends StatefulWidget {
   final String currencyName;
   final bool currencyStatus;
+  final bool loading;
 
   const SearchItem({
     Key? key,
     required this.currencyName,
     required this.currencyStatus,
+    this.loading = false,
   }) : super(key: key);
 
   @override
+  State<SearchItem> createState() => _SearchItemState();
+}
+
+class _SearchItemState extends State<SearchItem> {
+  @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(currencyName),
+      title: Text(widget.currencyName),
       trailing: IconButton(
-        icon:
-            currencyStatus ? const Icon(Icons.bookmark) : const Icon(Icons.add),
-        onPressed: () {
-          Injector.di<LatestBloc>().add(
-            AddCurrencyEvent(currencyName),
-          );
-          SnackBar snackBar;
-          if (currencyStatus) {
-            snackBar = searchSnackBar('$currencyName removed from list');
-          } else {
-            snackBar = searchSnackBar('$currencyName added to list');
-          }
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        },
+        icon: widget.loading
+            ? const CircularProgressIndicator()
+            : widget.currencyStatus
+                ? const Icon(Icons.bookmark)
+                : const Icon(Icons.add),
+        onPressed: widget.loading
+            ? null
+            : () async {
+                context.read<SearchBloc>().currentLoadingCurrencyItem =
+                    widget.currencyName;
+
+                Injector.di<LatestBloc>().add(
+                  AddCurrencyEvent(widget.currencyName),
+                );
+
+                String snackBarMessage = await Injector.di<SearchBloc>()
+                    .showSnackBar(widget.currencyName, widget.currencyStatus);
+
+                if (snackBarMessage.isNotEmpty &&
+                    mounted &&
+                    (context.read<LatestBloc>().state is LatestExchangeState)) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    searchSnackBar(snackBarMessage),
+                  );
+                }
+              },
       ),
     );
   }

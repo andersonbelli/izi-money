@@ -34,12 +34,12 @@ class LatestBloc extends Bloc<LatestEvent, LatestState> {
     this.clearLocalCurrencies,
   ) : super(LatestInitialState()) {
     on<GetUserCurrenciesEvent>((event, emit) async {
+      emit(LatestLoadingState());
       final getLocalLatestResult = await getLocalCurrenciesUseCase();
 
       getLocalLatestResult.fold(
         (failure) => emit(LatestErrorState(message: '$failure')),
         (userCurrencies) {
-          emit(LatestLoadingState());
           if (userCurrencies != null) {
             _userBase = userCurrencies.base;
             fillUserCurrenciesList(userCurrencies.rates);
