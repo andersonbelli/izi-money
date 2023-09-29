@@ -1,33 +1,49 @@
 name: Dart
 
-on:
-  push:
-    branches: [ "develop" ]
+'on':
   pull_request:
-    branches: [ "develop" ]
-env:
-  CURRENT_ENV: ${{ github.event.pull_request.base.ref }}
+    branches:
+      - ${{ github.event.pull_request.base.ref }}
+  push:
+    branches:
+      - ${{ github.event.pull_request.base.ref }}
+
+#on:
+#  push:
+#    branches: [ "${{ github.event.pull_request.base.ref }}" ]
+#  pull_request:
+#    branches: [ "${{ github.event.pull_request.base.ref }}" ]
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    env:
+      CURRENT_ENV: ${{ github.event.pull_request.base.ref }}
+      PROJECT_ID: 'accuwriter-${{ github.event.pull_request.base.ref }}'
+      TEST_VAR: 'lib/main\_$CURRENT_ENV'
+      TEST_VAR1: 'lib/asd_$CURRENT_ENV'
+      TEST_VAR2: 'lib/main_${CURRENT_ENV}'
     steps:
       - uses: actions/checkout@v4
     
       - name: 'Checkout ${{ github.head_ref }} - ${{ github.event.pull_request.base.ref }}'
         env:
-          PROJECT_ID: 'accuwriter-${{ github.event.pull_request.base.ref }}'
+          PROJECT_ID2: 'accuwriter-${{ github.event.pull_request.base.ref }}'
           TARGET1: 'lib/main\_${CURRENT_ENV}'
-          TEST_VAR: 'lib/main\_$CURRENT_ENV'
-          TEST_VAR1: $CURRENT_ENV
-          TEST_VAR2: 'lib/main_${{ CURRENT_ENV }}'
-        run: echo Base_REF ${{ github.base_ref }}
+          TEST_VAR3: 'lib/main\_$CURRENT_ENV'
+          TEST_VAR4: 'lib/asd_$CURRENT_ENV'
+          TEST_VAR5: 'lib/main_${CURRENT_ENV}'
+        run: echo 'Base_REF ${{ github.base_ref }} ||| {TARGET} -> $TARGET _ {TEST_VAR3} -> ${TEST_VAR3} _ TEST_VAR4 -> $TEST_VAR4 _ TEST_VAR5 -> $TEST_VAR5 _ PROJECT_ID2 -> ${PROJECT_ID2}'
         
-      - name: 'Checkout PROJECT_ID'
+      - name: 'Checkout PROJECT_ID1'
         env:
-          PROJECT_ID: 'accuwriter-${{ github.event.pull_request.base.ref }}'
+          PROJECT_ID1: 'accuwriter-${{ github.event.pull_request.base.ref }}'
+        run: echo $PROJECT_ID1
+
+      - name: 'Checkout PROJECT_ID'
         run: echo $PROJECT_ID
 
+      - name: 'Checkout PROJECT_ID'
+        run: echo 'PROJECT_ID_$PROJECT_ID'
         
       - name: 'Checkout TARGET'
         env:
@@ -46,31 +62,8 @@ jobs:
       - name: 'Checkout TEST_VAR2_TEST_VAR2'
         run: echo 'TEST_VAR2_$TEST_VAR2'
 
-      - name: 'Checkout TEST_VAR2'
-        run: echo '$TEST_VAR2'
+      - name: 'Checkout {TEST_VAR2}'
+        run: echo '${TEST_VAR2}'
 
-      # Note: This workflow uses the latest stable version of the Dart SDK.
-      # You can specify other versions if desired, see documentation here:
-      # https://github.com/dart-lang/setup-dart/blob/main/README.md
-      # - uses: dart-lang/setup-dart@v1
-      - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
-
-      - name: Echo ${{ github.base_ref }}
-        run: echo Base_REF ${{ github.base_ref }}
-
-      - name: Install dependencies
-        run: dart pub get
-
-      # Uncomment this step to verify the use of 'dart format' on each commit.
-      # - name: Verify formatting
-      #   run: dart format --output=none --set-exit-if-changed .
-
-      # Consider passing '--fatal-infos' for slightly stricter analysis.
-      - name: Analyze project source
-        run: dart analyze
-
-      # Your project will need to have tests in test/ and a dependency on
-      # package:test for this step to succeed. Note that Flutter projects will
-      # want to change this to 'flutter test'.
-      - name: Run tests
-        run: dart test
+      - name: 'Checkout TEST_VAR2_{TEST_VAR2}'
+        run: echo 'TEST_VAR2_${TEST_VAR2}'
