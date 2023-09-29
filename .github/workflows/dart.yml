@@ -10,23 +10,24 @@ on:
       - develop
       - master
 
+env:
+  CURRENT_ENV: ${{ github.event.pull_request.base.ref }}
+  PROJECT_ID: 'accuwriter-${{ github.event.pull_request.base.ref }}'
+  TARGET: 'lib/main_${{ github.event.pull_request.base.ref }}'
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      CURRENT_ENV: ${{ github.event.pull_request.base.ref }}
-      PROJECT_ID: 'accuwriter-${{ github.event.pull_request.base.ref }}'
-      TARGET: 'lib/main_${{ github.event.pull_request.base.ref }}'
     steps:
       - uses: actions/checkout@v4
     
       - name: 'Checkout ${{ github.head_ref }} - ${{ github.event.pull_request.base.ref }}'
         env:
           PROJECT_ID2: 'accuwriter-${{ github.event.pull_request.base.ref }}'
-          TEST_VAR3: 'lib/main\_$CURRENT_ENV'
-          TEST_VAR4: 'lib/asd_$CURRENT_ENV'
-          TEST_VAR5: 'lib/main_${CURRENT_ENV}'
-        run: echo 'Base_REF ${{ github.base_ref }} ||| {TARGET} -> $TARGET _ {TEST_VAR3} -> ${TEST_VAR3} _ TEST_VAR4 -> $TEST_VAR4 _ TEST_VAR5 -> $TEST_VAR5 _ PROJECT_ID2 -> ${PROJECT_ID2}'
+          TEST_VAR3: 'lib/main\_${{ env.CURRENT_ENV }}'
+          TEST_VAR4: 'lib/asd_${{ env.CURRENT_ENV }}'
+          TEST_VAR5: 'lib/main_${{ env.CURRENT_ENV }}'
+        run: echo 'Base_REF ${{ github.base_ref }} {TARGET} ${{ env.TARGET }} {TEST_VAR3} ${TEST_VAR3} TEST_VAR4 $TEST_VAR4 TEST_VAR5 $TEST_VAR5 PROJECT_ID2 ${PROJECT_ID2}'
         
       - name: 'Checkout PROJECT_ID1'
         env:
@@ -45,7 +46,7 @@ jobs:
         run: echo $TARGET
 
       - name: 'Checkout TARGET'
-        run: echo 'lib/main_$TARGET'
+        run: echo 'lib/main_${{ env.TARGET }}'
 
       - name: 'Flutter'
         uses: subosito/flutter-action@v2
@@ -55,4 +56,4 @@ jobs:
           cache: true
       
       - name: 'Web Build'
-        run: flutter build web --dart-define --target $TARGET --no-tree-shake-icons
+        run: flutter build web --dart-define --target ${{ env.TARGET }} --no-tree-shake-icons
