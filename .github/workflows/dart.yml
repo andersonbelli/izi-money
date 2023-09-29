@@ -1,6 +1,6 @@
-name: Dart
+name: Dart (${{ github.event.pull_request.base.ref }})
 
-'on':
+on:
   pull_request:
     branches:
       - ${{ github.event.pull_request.base.ref }}
