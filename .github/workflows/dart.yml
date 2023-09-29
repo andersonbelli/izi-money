@@ -5,12 +5,11 @@ on:
     branches: [ "develop" ]
   pull_request:
     branches: [ "develop" ]
-env:
-  CURRENT_ENV: ${{ github.event.pull_request.base.ref }}
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    env:
+      CURRENT_ENV: ${{ github.event.pull_request.base.ref }}
     steps:
       - uses: actions/checkout@v4
     
@@ -23,11 +22,16 @@ jobs:
           TEST_VAR2: 'lib/main_${CURRENT_ENV}'
         run: echo Base_REF ${{ github.base_ref }}
         
-      - name: 'Checkout PROJECT_ID'
+      - name: 'Checkout PROJECT_ID1'
         env:
-          PROJECT_ID: 'accuwriter-${{ github.event.pull_request.base.ref }}'
+          PROJECT_ID1: 'accuwriter-${{ github.event.pull_request.base.ref }}'
+        run: echo $PROJECT_ID1
+
+      - name: 'Checkout PROJECT_ID'
         run: echo $PROJECT_ID
 
+      - name: 'Checkout PROJECT_ID'
+        run: echo 'PROJECT_ID_$PROJECT_ID'
         
       - name: 'Checkout TARGET'
         env:
