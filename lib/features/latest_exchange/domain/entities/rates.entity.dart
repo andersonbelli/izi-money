@@ -1,342 +1,343 @@
 class Rates {
-  double? aED;
-  double? aFN;
-  double? aLL;
-  double? aMD;
-  double? aNG;
-  double? aOA;
-  double? aRS;
-  double? aUD;
-  double? aWG;
-  double? aZN;
-  double? bAM;
-  double? bBD;
-  double? bDT;
-  double? bGN;
-  double? bHD;
-  double? bIF;
-  double? bMD;
-  double? bND;
-  double? bOB;
-  double? bRL;
-  double? bSD;
-  double? bTC;
-  double? bTN;
-  double? bWP;
-  double? bYN;
-  double? bZD;
-  double? cAD;
-  double? cDF;
-  double? cHF;
-  double? cLF;
-  double? cLP;
-  double? cNH;
-  double? cNY;
-  double? cOP;
-  double? cRC;
-  double? cUC;
-  double? cUP;
-  double? cVE;
-  double? cZK;
-  double? dJF;
-  double? dKK;
-  double? dOP;
-  double? dZD;
-  double? eGP;
-  double? eRN;
-  double? eTB;
-  int? eUR;
-  double? fJD;
-  double? fKP;
-  double? gBP;
-  double? gEL;
-  double? gGP;
-  double? gHS;
-  double? gIP;
-  double? gMD;
-  double? gNF;
-  double? gTQ;
-  double? gYD;
-  double? hKD;
-  double? hNL;
-  double? hRK;
-  double? hTG;
-  double? hUF;
-  double? iDR;
-  double? iLS;
-  double? iMP;
-  double? iNR;
-  double? iQD;
-  double? iRR;
-  double? iSK;
-  double? jEP;
-  double? jMD;
-  double? jOD;
-  double? jPY;
-  double? kES;
-  double? kGS;
-  double? kHR;
-  double? kMF;
-  double? kPW;
-  double? kRW;
-  double? kWD;
-  double? kYD;
-  double? kZT;
-  double? lAK;
-  double? lBP;
-  double? lKR;
-  double? lRD;
-  double? lSL;
-  double? lYD;
-  double? mAD;
-  double? mDL;
-  double? mGA;
-  double? mKD;
-  double? mMK;
-  double? mNT;
-  double? mOP;
-  double? mRU;
-  double? mUR;
-  double? mVR;
-  double? mWK;
-  double? mXN;
-  double? mYR;
-  double? mZN;
-  double? nAD;
-  double? nGN;
-  double? nIO;
-  double? nOK;
-  double? nPR;
-  double? nZD;
-  double? oMR;
-  double? pAB;
-  double? pEN;
-  double? pGK;
-  double? pHP;
-  double? pKR;
-  double? pLN;
-  double? pYG;
-  double? qAR;
-  double? rON;
-  double? rSD;
-  double? rUB;
-  double? rWF;
-  double? sAR;
-  double? sBD;
-  double? sCR;
-  double? sDG;
-  double? sEK;
-  double? sGD;
-  double? sHP;
-  double? sLL;
-  double? sOS;
-  double? sRD;
-  double? sSP;
-  double? sTD;
-  double? sTN;
-  double? sVC;
-  double? sYP;
-  double? sZL;
-  double? tHB;
-  double? tJS;
-  double? tMT;
-  double? tND;
-  double? tOP;
-  double? tRY;
-  double? tTD;
-  double? tWD;
-  double? tZS;
-  double? uAH;
-  double? uGX;
-  double? uSD;
-  double? uYU;
-  double? uZS;
-  double? vES;
-  double? vND;
-  double? vUV;
-  double? wST;
-  double? xAF;
-  double? xAG;
-  double? xAU;
-  double? xCD;
-  double? xDR;
-  double? xOF;
-  double? xPD;
-  double? xPF;
-  double? xPT;
-  double? yER;
-  double? zAR;
-  double? zMW;
-  double? zWL;
+  final double? AED;
+  final double? AFN;
+  final double? ALL;
+  final double? AMD;
+  final double? ANG;
+  final double? AOA;
+  final double? ARS;
+  final double? AUD;
+  final double? AWG;
+  final double? AZN;
+  final double? BAM;
+  final double? BBD;
+  final double? BDT;
+  final double? BGN;
+  final double? BHD;
+  final double? BIF;
+  final double? BMD;
+  final double? BND;
+  final double? BOB;
+  final double? BRL;
+  final double? BSD;
+  final double? BTC;
+  final double? BTN;
+  final double? BWP;
+  final double? BYN;
+  final double? BZD;
+  final double? CAD;
+  final double? CDF;
+  final double? CHF;
+  final double? CLF;
+  final double? CLP;
+  final double? CNH;
+  final double? CNY;
+  final double? COP;
+  final double? CRC;
+  final double? CUC;
+  final double? CUP;
+  final double? CVE;
+  final double? CZK;
+  final double? DJF;
+  final double? DKK;
+  final double? DOP;
+  final double? DZD;
+  final double? EGP;
+  final double? ERN;
+  final double? ETB;
+  final double? EUR;
+  final double? FJD;
+  final double? FKP;
+  final double? GBP;
+  final double? GEL;
+  final double? GGP;
+  final double? GHS;
+  final double? GIP;
+  final double? GMD;
+  final double? GNF;
+  final double? GTQ;
+  final double? GYD;
+  final double? HKD;
+  final double? HNL;
+  final double? HRK;
+  final double? HTG;
+  final double? HUF;
+  final double? IDR;
+  final double? ILS;
+  final double? IMP;
+  final double? INR;
+  final double? IQD;
+  final double? IRR;
+  final double? ISK;
+  final double? JEP;
+  final double? JMD;
+  final double? JOD;
+  final double? JPY;
+  final double? KES;
+  final double? KGS;
+  final double? KHR;
+  final double? KMF;
+  final double? KPW;
+  final double? KRW;
+  final double? KWD;
+  final double? KYD;
+  final double? KZT;
+  final double? LAK;
+  final double? LBP;
+  final double? LKR;
+  final double? LRD;
+  final double? LSL;
+  final double? LYD;
+  final double? MAD;
+  final double? MDL;
+  final double? MGA;
+  final double? MKD;
+  final double? MMK;
+  final double? MNT;
+  final double? MOP;
+  final double? MRU;
+  final double? MUR;
+  final double? MVR;
+  final double? MWK;
+  final double? MXN;
+  final double? MYR;
+  final double? MZN;
+  final double? NAD;
+  final double? NGN;
+  final double? NIO;
+  final double? NOK;
+  final double? NPR;
+  final double? NZD;
+  final double? OMR;
+  final double? PAB;
+  final double? PEN;
+  final double? PGK;
+  final double? PHP;
+  final double? PKR;
+  final double? PLN;
+  final double? PYG;
+  final double? QAR;
+  final double? RON;
+  final double? RSD;
+  final double? RUB;
+  final double? RWF;
+  final double? SAR;
+  final double? SBD;
+  final double? SCR;
+  final double? SDG;
+  final double? SEK;
+  final double? SGD;
+  final double? SHP;
+  final double? SLL;
+  final double? SOS;
+  final double? SRD;
+  final double? SSP;
+  final double? STD;
+  final double? STN;
+  final double? SVC;
+  final double? SYP;
+  final double? SZL;
+  final double? THB;
+  final double? TJS;
+  final double? TMT;
+  final double? TND;
+  final double? TOP;
+  final double? TRY;
+  final double? TTD;
+  final double? TWD;
+  final double? TZS;
+  final double? UAH;
+  final double? UGX;
+  final int? USD;
+  final double? UYU;
+  final double? UZS;
+  final double? VES;
+  final double? VND;
+  final double? VUV;
+  final double? WST;
+  final double? XAF;
+  final double? XAG;
+  final double? XAU;
+  final double? XCD;
+  final double? XDR;
+  final double? XOF;
+  final double? XPD;
+  final double? XPF;
+  final double? XPT;
+  final double? YER;
+  final double? ZAR;
+  final double? ZMW;
+  final double? ZWL;
 
-  Rates(
-      {this.aED,
-      this.aFN,
-      this.aLL,
-      this.aMD,
-      this.aNG,
-      this.aOA,
-      this.aRS,
-      this.aUD,
-      this.aWG,
-      this.aZN,
-      this.bAM,
-      this.bBD,
-      this.bDT,
-      this.bGN,
-      this.bHD,
-      this.bIF,
-      this.bMD,
-      this.bND,
-      this.bOB,
-      this.bRL,
-      this.bSD,
-      this.bTC,
-      this.bTN,
-      this.bWP,
-      this.bYN,
-      this.bZD,
-      this.cAD,
-      this.cDF,
-      this.cHF,
-      this.cLF,
-      this.cLP,
-      this.cNH,
-      this.cNY,
-      this.cOP,
-      this.cRC,
-      this.cUC,
-      this.cUP,
-      this.cVE,
-      this.cZK,
-      this.dJF,
-      this.dKK,
-      this.dOP,
-      this.dZD,
-      this.eGP,
-      this.eRN,
-      this.eTB,
-      this.eUR,
-      this.fJD,
-      this.fKP,
-      this.gBP,
-      this.gEL,
-      this.gGP,
-      this.gHS,
-      this.gIP,
-      this.gMD,
-      this.gNF,
-      this.gTQ,
-      this.gYD,
-      this.hKD,
-      this.hNL,
-      this.hRK,
-      this.hTG,
-      this.hUF,
-      this.iDR,
-      this.iLS,
-      this.iMP,
-      this.iNR,
-      this.iQD,
-      this.iRR,
-      this.iSK,
-      this.jEP,
-      this.jMD,
-      this.jOD,
-      this.jPY,
-      this.kES,
-      this.kGS,
-      this.kHR,
-      this.kMF,
-      this.kPW,
-      this.kRW,
-      this.kWD,
-      this.kYD,
-      this.kZT,
-      this.lAK,
-      this.lBP,
-      this.lKR,
-      this.lRD,
-      this.lSL,
-      this.lYD,
-      this.mAD,
-      this.mDL,
-      this.mGA,
-      this.mKD,
-      this.mMK,
-      this.mNT,
-      this.mOP,
-      this.mRU,
-      this.mUR,
-      this.mVR,
-      this.mWK,
-      this.mXN,
-      this.mYR,
-      this.mZN,
-      this.nAD,
-      this.nGN,
-      this.nIO,
-      this.nOK,
-      this.nPR,
-      this.nZD,
-      this.oMR,
-      this.pAB,
-      this.pEN,
-      this.pGK,
-      this.pHP,
-      this.pKR,
-      this.pLN,
-      this.pYG,
-      this.qAR,
-      this.rON,
-      this.rSD,
-      this.rUB,
-      this.rWF,
-      this.sAR,
-      this.sBD,
-      this.sCR,
-      this.sDG,
-      this.sEK,
-      this.sGD,
-      this.sHP,
-      this.sLL,
-      this.sOS,
-      this.sRD,
-      this.sSP,
-      this.sTD,
-      this.sTN,
-      this.sVC,
-      this.sYP,
-      this.sZL,
-      this.tHB,
-      this.tJS,
-      this.tMT,
-      this.tND,
-      this.tOP,
-      this.tRY,
-      this.tTD,
-      this.tWD,
-      this.tZS,
-      this.uAH,
-      this.uGX,
-      this.uSD,
-      this.uYU,
-      this.uZS,
-      this.vES,
-      this.vND,
-      this.vUV,
-      this.wST,
-      this.xAF,
-      this.xAG,
-      this.xAU,
-      this.xCD,
-      this.xDR,
-      this.xOF,
-      this.xPD,
-      this.xPF,
-      this.xPT,
-      this.yER,
-      this.zAR,
-      this.zMW,
-      this.zWL});
+  const Rates({
+    this.AED,
+    this.AFN,
+    this.ALL,
+    this.AMD,
+    this.ANG,
+    this.AOA,
+    this.ARS,
+    this.AUD,
+    this.AWG,
+    this.AZN,
+    this.BAM,
+    this.BBD,
+    this.BDT,
+    this.BGN,
+    this.BHD,
+    this.BIF,
+    this.BMD,
+    this.BND,
+    this.BOB,
+    this.BRL,
+    this.BSD,
+    this.BTC,
+    this.BTN,
+    this.BWP,
+    this.BYN,
+    this.BZD,
+    this.CAD,
+    this.CDF,
+    this.CHF,
+    this.CLF,
+    this.CLP,
+    this.CNH,
+    this.CNY,
+    this.COP,
+    this.CRC,
+    this.CUC,
+    this.CUP,
+    this.CVE,
+    this.CZK,
+    this.DJF,
+    this.DKK,
+    this.DOP,
+    this.DZD,
+    this.EGP,
+    this.ERN,
+    this.ETB,
+    this.EUR,
+    this.FJD,
+    this.FKP,
+    this.GBP,
+    this.GEL,
+    this.GGP,
+    this.GHS,
+    this.GIP,
+    this.GMD,
+    this.GNF,
+    this.GTQ,
+    this.GYD,
+    this.HKD,
+    this.HNL,
+    this.HRK,
+    this.HTG,
+    this.HUF,
+    this.IDR,
+    this.ILS,
+    this.IMP,
+    this.INR,
+    this.IQD,
+    this.IRR,
+    this.ISK,
+    this.JEP,
+    this.JMD,
+    this.JOD,
+    this.JPY,
+    this.KES,
+    this.KGS,
+    this.KHR,
+    this.KMF,
+    this.KPW,
+    this.KRW,
+    this.KWD,
+    this.KYD,
+    this.KZT,
+    this.LAK,
+    this.LBP,
+    this.LKR,
+    this.LRD,
+    this.LSL,
+    this.LYD,
+    this.MAD,
+    this.MDL,
+    this.MGA,
+    this.MKD,
+    this.MMK,
+    this.MNT,
+    this.MOP,
+    this.MRU,
+    this.MUR,
+    this.MVR,
+    this.MWK,
+    this.MXN,
+    this.MYR,
+    this.MZN,
+    this.NAD,
+    this.NGN,
+    this.NIO,
+    this.NOK,
+    this.NPR,
+    this.NZD,
+    this.OMR,
+    this.PAB,
+    this.PEN,
+    this.PGK,
+    this.PHP,
+    this.PKR,
+    this.PLN,
+    this.PYG,
+    this.QAR,
+    this.RON,
+    this.RSD,
+    this.RUB,
+    this.RWF,
+    this.SAR,
+    this.SBD,
+    this.SCR,
+    this.SDG,
+    this.SEK,
+    this.SGD,
+    this.SHP,
+    this.SLL,
+    this.SOS,
+    this.SRD,
+    this.SSP,
+    this.STD,
+    this.STN,
+    this.SVC,
+    this.SYP,
+    this.SZL,
+    this.THB,
+    this.TJS,
+    this.TMT,
+    this.TND,
+    this.TOP,
+    this.TRY,
+    this.TTD,
+    this.TWD,
+    this.TZS,
+    this.UAH,
+    this.UGX,
+    this.USD,
+    this.UYU,
+    this.UZS,
+    this.VES,
+    this.VND,
+    this.VUV,
+    this.WST,
+    this.XAF,
+    this.XAG,
+    this.XAU,
+    this.XCD,
+    this.XDR,
+    this.XOF,
+    this.XPD,
+    this.XPF,
+    this.XPT,
+    this.YER,
+    this.ZAR,
+    this.ZMW,
+    this.ZWL,
+  });
 }

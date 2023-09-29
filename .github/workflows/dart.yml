@@ -1,0 +1,59 @@
+name: Dart (test)
+
+on:
+#  pull_request:
+#    branches:
+#      - develop
+#      - master
+  push:
+    branches:
+      - develop
+      - master
+
+env:
+  CURRENT_ENV: ${{ github.ref_name }}
+  PROJECT_ID: 'accuwriter-${{ github.ref_name }}'
+  TARGET: 'lib/main_${{ github.ref_name }}.dart'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+    
+      - name: 'Checkout ${{ github.head_ref }} - ${{ github.ref_name }} - ${{ github.event.pull_request.base.ref }}'
+        env:
+          PROJECT_ID2: 'accuwriter-${{ github.event.pull_request.base.ref }}'
+          TEST_VAR3: 'lib/main\_${{ env.CURRENT_ENV }}'
+          TEST_VAR4: 'lib/asd_${{ env.CURRENT_ENV }}'
+          TEST_VAR5: 'lib/main_${{ env.CURRENT_ENV }}'
+        run: echo 'Base_REF ${{ github.base_ref }} {TARGET} ${{ env.TARGET }} {TEST_VAR3} ${TEST_VAR3} TEST_VAR4 $TEST_VAR4 TEST_VAR5 $TEST_VAR5 PROJECT_ID2 ${PROJECT_ID2}'
+        
+      - name: 'Checkout PROJECT_ID1'
+        env:
+          PROJECT_ID1: 'accuwriter-${{ github.event.pull_request.base.ref }}'
+        run: echo $PROJECT_ID1
+
+      - name: 'Checkout PROJECT_ID'
+        run: echo $PROJECT_ID
+
+      - name: 'Checkout PROJECT_ID'
+        run: echo 'PROJECT_ID_$PROJECT_ID'
+        
+      - name: 'Checkout TARGET env'
+        env:
+          TARGET1: 'lib/main_${{ github.base_ref }}'
+        run: echo $TARGET1
+
+      - name: 'Checkout TARGET'
+        run: echo 'lib/main_${{ env.TARGET }}'
+
+      - name: 'Flutter'
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.13.x"
+          channel: "stable"
+          cache: true
+      
+      - name: 'Web Build'
+        run: flutter build web --dart-define --target ${{ env.TARGET }} --no-tree-shake-icons

@@ -1,36 +1,30 @@
 import 'package:izi_money/features/latest_exchange/data/models/rates.model.dart';
 import 'package:izi_money/features/latest_exchange/domain/entities/latest_exchange.entity.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'latest_exchange.model.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class LatestExchangeModel extends LatestExchange {
+  @JsonKey(name: 'rates')
+  final RatesModel ratesModel;
+
   LatestExchangeModel({
-    bool? success,
-    String? base,
-    String? date,
-    RatesModel? rates,
+    required bool success,
+    required String base,
+    required String date,
+    this.ratesModel = const RatesModel(),
   }) : super(
           success: success,
           base: base,
           date: date,
-          rates: rates,
+          rates: ratesModel,
         );
 
-  LatestExchangeModel.fromJson(Map<String, dynamic> json) {
-    success = json['success'];
-    base = json['base'];
-    date = json['date'];
-    rates = json['rates'] != null
-        ? RatesModel.fromJson(json['rates'])
-        : RatesModel();
-  }
+  factory LatestExchangeModel.fromJson(Map<String, dynamic> json) =>
+      _$LatestExchangeModelFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    return {
-      'success': success,
-      'base': base,
-      'date': date,
-      'rates': rates,
-    };
-  }
+  Map<String, dynamic> toJson() => _$LatestExchangeModelToJson(this);
 
   factory LatestExchangeModel.fromLatestExchange(
     LatestExchange latestExchange,
@@ -39,7 +33,7 @@ class LatestExchangeModel extends LatestExchange {
       success: latestExchange.success,
       base: latestExchange.base,
       date: latestExchange.date,
-      rates: RatesModel.fromRates(latestExchange.rates),
+      ratesModel: RatesModel.fromRates(latestExchange.rates),
     );
   }
 }

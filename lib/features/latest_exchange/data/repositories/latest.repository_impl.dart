@@ -2,23 +2,77 @@ import 'package:dartz/dartz.dart';
 import 'package:izi_money/core/http/models/base.exception.dart';
 import 'package:izi_money/core/http/models/generic.exception.dart';
 import 'package:izi_money/core/http/models/request_fail.exception.dart';
+import 'package:izi_money/features/latest_exchange/data/datasources/latest.local.datasource.dart';
 import 'package:izi_money/features/latest_exchange/data/datasources/latest.remote.datasource.dart';
+import 'package:izi_money/features/latest_exchange/data/models/latest_exchange.model.dart';
 import 'package:izi_money/features/latest_exchange/domain/entities/latest_exchange.entity.dart';
 import 'package:izi_money/features/latest_exchange/domain/repositories/latest.repository.dart';
 
 class LatestRepository extends ILatestRepository {
-  final ILatestDataSource remote;
+  final ILatestRemoteDataSource remote;
+  final ILatestLocalDataSource local;
 
-  LatestRepository(this.remote);
+  LatestRepository(this.remote, this.local);
 
   @override
-  Future<Either<BaseException, LatestExchange>> getLatest() async {
+  Future<Either<BaseException, LatestExchange>> getRemoteLatest(
+    List<String> userCurrencies, {
+    String base = 'USD',
+  }) async {
     try {
-      return Right(await remote.getLatest());
+      return Right(await remote.getLatestExchange(
+        base: base,
+        userCurrencies,
+      ));
+    } on RequestFailException catch (e) {
+      final localExchange = await local.getLatestExchange();
+
+      if (localExchange != null) {
+        return Right(localExchange);
+      } else {
+        return Left(e);
+      }
+    } on GenericException catch (e) {
+      return Left(e);
+    }
+  }
+
+  @override
+  Future<Either<BaseException, LatestExchange?>> getLocalCurrencies({
+    String base = 'USD',
+  }) async {
+    try {
+      return Right(await local.getLatestExchange());
     } on RequestFailException catch (e) {
       return Left(e);
     } on GenericException catch (e) {
       return Left(e);
     }
   }
+
+  @override
+  Future<Either<BaseException, LatestExchange>> addNewCurrency(
+    String base,
+    List<String> newCurrencyList,
+  ) async {
+    try {
+      return Right(await remote.getLatestExchange(
+        base: base,
+        newCurrencyList,
+      ));
+    } on RequestFailException catch (e) {
+      return Left(e);
+    } on GenericException catch (e) {
+      return Left(e);
+    }
+  }
+
+  @override
+  Future<LatestExchange> saveLocalCurrencies(LatestExchange exchange) async =>
+      await local.saveLocalCurrencies(
+          LatestExchangeModel.fromLatestExchange(exchange));
+
+  @override
+  Future<bool> clearLocalCurrencies() async =>
+      await local.clearLocalCurrencies();
 }

@@ -7,27 +7,28 @@ import 'package:mockito/mockito.dart';
 import '../../mock_latest_exchange.model.dart';
 import 'latest.remote.datasource_test.mocks.dart';
 
-@GenerateMocks([LatestDataSource])
+@GenerateMocks([ILatestRemoteDataSource])
 void main() {
-  late MockILatestDataSource latestDataSource;
+  const String base = 'USD';
+  late MockILatestRemoteDataSource latestDataSource;
 
   setUp(() {
-    latestDataSource = MockILatestDataSource();
+    latestDataSource = MockILatestRemoteDataSource();
   });
 
   test(
       'Should request getLatest and'
       'verify it returns a instance of LatestExchangeModel', () async {
     // Arrange
-    when(latestDataSource.getLatest()).thenAnswer(
+    when(latestDataSource.getLatestExchange(base: base, [])).thenAnswer(
       (realInvocation) async => MockLatestExchangeModel.mock,
     );
 
     // Act
-    var result = await latestDataSource.getLatest();
+    var result = await latestDataSource.getLatestExchange(base: base, []);
 
     // Assert
-    verify(latestDataSource.getLatest()).called(1);
+    verify(latestDataSource.getLatestExchange(base: base, [])).called(1);
     expect(result, isInstanceOf<LatestExchangeModel>());
   });
 }
