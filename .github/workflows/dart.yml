@@ -16,6 +16,7 @@ jobs:
     env:
       CURRENT_ENV: ${{ github.event.pull_request.base.ref }}
       PROJECT_ID: 'accuwriter-${{ github.event.pull_request.base.ref }}'
+      TARGET: 'lib/main_${{ github.event.pull_request.base.ref }}'
     steps:
       - uses: actions/checkout@v4
     
@@ -38,28 +39,13 @@ jobs:
       - name: 'Checkout PROJECT_ID'
         run: echo 'PROJECT_ID_$PROJECT_ID'
         
-      - name: 'Checkout TARGET'
+      - name: 'Checkout TARGET env'
         env:
           TARGET: 'lib/main_${{ github.base_ref }}'
         run: echo $TARGET
 
-      - name: 'Checkout TARGET1'
-        run: echo $TARGET1
-
-      - name: 'Checkout TARGET1 WITH TEXT'
-        run: echo 'TARGET1_$TARGET1'
-
-      - name: 'Checkout TEST_VAR2 WITH TEXT'
-        run: echo 'TESTVAR2_$TEST_VAR2'
-
-      - name: 'Checkout TEST_VAR2_TEST_VAR2'
-        run: echo 'TEST_VAR2_$TEST_VAR2'
-
-      - name: 'Checkout {TEST_VAR2}'
-        run: echo '${TEST_VAR2}'
-
-      - name: 'Checkout TEST_VAR2_{TEST_VAR2}'
-        run: echo 'TEST_VAR2_${TEST_VAR2}'
+      - name: 'Checkout TARGET'
+        run: echo 'lib/main_$PROJECT_ID'
 
       - name: 'Flutter'
         uses: subosito/flutter-action@v2
@@ -69,6 +55,4 @@ jobs:
           cache: true
       
       - name: 'Web Build'
-        env:
-          TARGET: 'lib/main_${CURRENT_ENV}'
         run: flutter build web --dart-define --target '$TARGET' --no-tree-shake-icons
