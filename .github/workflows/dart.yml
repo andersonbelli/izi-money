@@ -62,5 +62,12 @@ jobs:
       - name: 'Checkout TEST_VAR2_{TEST_VAR2}'
         run: echo 'TEST_VAR2_${TEST_VAR2}'
 
+      - name: 'Flutter'
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.13.x"
+          channel: "stable"
+          cache: true
+      
       - name: 'Web Build'
         run: flutter build web --dart-define --target '$TARGET' --no-tree-shake-icons
