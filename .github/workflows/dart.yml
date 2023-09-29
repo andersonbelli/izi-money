@@ -22,7 +22,6 @@ jobs:
       - name: 'Checkout ${{ github.head_ref }} - ${{ github.event.pull_request.base.ref }}'
         env:
           PROJECT_ID2: 'accuwriter-${{ github.event.pull_request.base.ref }}'
-          TARGET: 'lib/main_${CURRENT_ENV}'
           TEST_VAR3: 'lib/main\_$CURRENT_ENV'
           TEST_VAR4: 'lib/asd_$CURRENT_ENV'
           TEST_VAR5: 'lib/main_${CURRENT_ENV}'
@@ -70,4 +69,6 @@ jobs:
           cache: true
       
       - name: 'Web Build'
+        env:
+          TARGET: 'lib/main_${CURRENT_ENV}'
         run: flutter build web --dart-define --target '$TARGET' --no-tree-shake-icons
