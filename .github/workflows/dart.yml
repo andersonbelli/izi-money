@@ -22,7 +22,18 @@ jobs:
         env:
           PROJECT_ID: 'accuwriter-${{ github.event.pull_request.base.ref }}'
           TARGET: 'lib/main_${{ github.base_ref }}'
-        run: echo Base_REF ${{ github.base_ref }} & echo $PROJECT_ID & echo $TARGET
+        run: echo Base_REF ${{ github.base_ref }}
+        
+      - name: 'Checkout PROJECT_ID'
+        env:
+          PROJECT_ID: 'accuwriter-${{ github.event.pull_request.base.ref }}'
+        run: echo $PROJECT_ID
+
+        
+      - name: 'Checkout TARGET'
+        env:
+          TARGET: 'lib/main_${{ github.base_ref }}'
+        run: echo $TARGET
 
       # Note: This workflow uses the latest stable version of the Dart SDK.
       # You can specify other versions if desired, see documentation here:
