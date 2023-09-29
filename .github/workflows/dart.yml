@@ -11,9 +11,9 @@ on:
       - master
 
 env:
-  CURRENT_ENV: ${{ github.event.pull_request.base.ref }}
-  PROJECT_ID: 'accuwriter-${{ github.event.pull_request.base.ref }}'
-  TARGET: 'lib/main_${{ github.event.pull_request.base.ref }}'
+  CURRENT_ENV: ${{ github.ref_name }}
+  PROJECT_ID: 'accuwriter-${{ github.ref_name }}'
+  TARGET: 'lib/main_${{ github.ref_name }}'
 
 jobs:
   build:
@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
     
-      - name: 'Checkout ${{ github.head_ref }} - ${{ github.event.pull_request.base.ref }}'
+      - name: 'Checkout ${{ github.head_ref }} - ${{ github.ref_name }} - ${{ github.event.pull_request.base.ref }}'
         env:
           PROJECT_ID2: 'accuwriter-${{ github.event.pull_request.base.ref }}'
           TEST_VAR3: 'lib/main\_${{ env.CURRENT_ENV }}'
