@@ -11,6 +11,9 @@ jobs:
     env:
       CURRENT_ENV: ${{ github.event.pull_request.base.ref }}
       PROJECT_ID: 'accuwriter-${{ github.event.pull_request.base.ref }}'
+      TEST_VAR: 'lib/main\_$CURRENT_ENV'
+      TEST_VAR1: 'lib/asd_$CURRENT_ENV'
+      TEST_VAR2: 'lib/main_${CURRENT_ENV}'
     steps:
       - uses: actions/checkout@v4
     
@@ -18,21 +21,21 @@ jobs:
         env:
           PROJECT_ID2: 'accuwriter-${{ github.event.pull_request.base.ref }}'
           TARGET1: 'lib/main\_${CURRENT_ENV}'
-          TEST_VAR: 'lib/main\_$CURRENT_ENV'
-          TEST_VAR1: 'lib/asd_$CURRENT_ENV'
-          TEST_VAR2: 'lib/main_${CURRENT_ENV}'
-        run: echo Base_REF ${{ github.base_ref }}
+          TEST_VAR3: 'lib/main\_$CURRENT_ENV'
+          TEST_VAR4: 'lib/asd_$CURRENT_ENV'
+          TEST_VAR5: 'lib/main_${CURRENT_ENV}'
+        run: echo 'Base_REF ${{ github.base_ref }} ||| {TARGET} -> $TARGET _ {TEST_VAR3} -> ${TEST_VAR3} _ TEST_VAR4 -> $TEST_VAR4 _ TEST_VAR5 -> $TEST_VAR5 _ PROJECT_ID2 -> ${PROJECT_ID2}'
         
       - name: 'Checkout PROJECT_ID1'
         env:
           PROJECT_ID1: 'accuwriter-${{ github.event.pull_request.base.ref }}'
         run: echo $PROJECT_ID1
 
-      - name: 'Checkout PROJECT_ID2'
-        run: echo $PROJECT_ID2
+      - name: 'Checkout PROJECT_ID'
+        run: echo $PROJECT_ID
 
-      - name: 'Checkout PROJECT_ID2'
-        run: echo 'PROJECT_ID_$PROJECT_ID2'
+      - name: 'Checkout PROJECT_ID'
+        run: echo 'PROJECT_ID_$PROJECT_ID'
         
       - name: 'Checkout TARGET'
         env:
