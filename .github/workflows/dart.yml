@@ -1,4 +1,4 @@
-name: Dart (${{ github.event.pull_request.base.ref }})
+name: Dart (test)
 
 'on':
   pull_request:
