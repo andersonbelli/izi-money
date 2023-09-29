@@ -3,7 +3,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Dart ${{ github.base_ref }}
+name: Dart
 
 on:
   push:
@@ -16,9 +16,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-    
       - uses: actions/checkout@v3
+    
+      - name: 'Checkout'
+        env:
+          PROJECT_ID: 'accuwriter-${{ github.event.pull_request.base.ref }}'
+          TARGET: 'lib/main_${{ github.base_ref }}'
+        run: echo Base_REF ${{ github.base_ref }} & echo $PROJECT_ID & echo $TARGET
 
       # Note: This workflow uses the latest stable version of the Dart SDK.
       # You can specify other versions if desired, see documentation here:
