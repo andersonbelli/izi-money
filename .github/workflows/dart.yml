@@ -20,7 +20,7 @@ jobs:
           TARGET1: 'lib/main\_${CURRENT_ENV}'
           TEST_VAR: 'lib/main\_$CURRENT_ENV'
           TEST_VAR1: $CURRENT_ENV
-          TEST_VAR2: 'lib/main_${{ CURRENT_ENV }}'
+          TEST_VAR2: 'lib/main_${CURRENT_ENV}'
         run: echo Base_REF ${{ github.base_ref }}
         
       - name: 'Checkout PROJECT_ID'
