@@ -1,34 +1,28 @@
-name: Dart
+name: Dart (test)
 
-'on':
-  pull_request:
-    branches:
-      - ${{ github.event.pull_request.base.ref }}
+on:
+#  pull_request:
+#    branches:
+#      - develop
+#      - master
   push:
     branches:
-      - ${{ github.event.pull_request.base.ref }}
+      - develop
+      - master
 
-#on:
-#  push:
-#    branches: [ "${{ github.event.pull_request.base.ref }}" ]
-#  pull_request:
-#    branches: [ "${{ github.event.pull_request.base.ref }}" ]
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
       CURRENT_ENV: ${{ github.event.pull_request.base.ref }}
       PROJECT_ID: 'accuwriter-${{ github.event.pull_request.base.ref }}'
-      TEST_VAR: 'lib/main\_$CURRENT_ENV'
-      TEST_VAR1: 'lib/asd_$CURRENT_ENV'
-      TEST_VAR2: 'lib/main_${CURRENT_ENV}'
+      TARGET: 'lib/main_${{ github.event.pull_request.base.ref }}'
     steps:
       - uses: actions/checkout@v4
     
       - name: 'Checkout ${{ github.head_ref }} - ${{ github.event.pull_request.base.ref }}'
         env:
           PROJECT_ID2: 'accuwriter-${{ github.event.pull_request.base.ref }}'
-          TARGET1: 'lib/main\_${CURRENT_ENV}'
           TEST_VAR3: 'lib/main\_$CURRENT_ENV'
           TEST_VAR4: 'lib/asd_$CURRENT_ENV'
           TEST_VAR5: 'lib/main_${CURRENT_ENV}'
@@ -45,25 +39,20 @@ jobs:
       - name: 'Checkout PROJECT_ID'
         run: echo 'PROJECT_ID_$PROJECT_ID'
         
-      - name: 'Checkout TARGET'
+      - name: 'Checkout TARGET env'
         env:
           TARGET: 'lib/main_${{ github.base_ref }}'
         run: echo $TARGET
 
-      - name: 'Checkout TARGET1'
-        run: echo $TARGET1
+      - name: 'Checkout TARGET'
+        run: echo 'lib/main_$TARGET'
 
-      - name: 'Checkout TARGET1 WITH TEXT'
-        run: echo 'TARGET1_$TARGET1'
-
-      - name: 'Checkout TEST_VAR2 WITH TEXT'
-        run: echo 'TESTVAR2_$TEST_VAR2'
-
-      - name: 'Checkout TEST_VAR2_TEST_VAR2'
-        run: echo 'TEST_VAR2_$TEST_VAR2'
-
-      - name: 'Checkout {TEST_VAR2}'
-        run: echo '${TEST_VAR2}'
-
-      - name: 'Checkout TEST_VAR2_{TEST_VAR2}'
-        run: echo 'TEST_VAR2_${TEST_VAR2}'
+      - name: 'Flutter'
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.13.x"
+          channel: "stable"
+          cache: true
+      
+      - name: 'Web Build'
+        run: flutter build web --dart-define --target $TARGET --no-tree-shake-icons
