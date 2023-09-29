@@ -1,34 +1,28 @@
 name: Dart (${{ github.event.pull_request.base.ref }})
 
-on:
+'on':
   pull_request:
     branches:
       - develop
+      - main
   push:
     branches:
       - develop
+      - main
 
-#on:
-#  push:
-#    branches: [ "${{ github.event.pull_request.base.ref }}" ]
-#  pull_request:
-#    branches: [ "${{ github.event.pull_request.base.ref }}" ]
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
       CURRENT_ENV: ${{ github.event.pull_request.base.ref }}
       PROJECT_ID: 'accuwriter-${{ github.event.pull_request.base.ref }}'
-      TEST_VAR: 'lib/main\_$CURRENT_ENV'
-      TEST_VAR1: 'lib/asd_$CURRENT_ENV'
-      TEST_VAR2: 'lib/main_${CURRENT_ENV}'
     steps:
       - uses: actions/checkout@v4
     
       - name: 'Checkout ${{ github.head_ref }} - ${{ github.event.pull_request.base.ref }}'
         env:
           PROJECT_ID2: 'accuwriter-${{ github.event.pull_request.base.ref }}'
-          TARGET1: 'lib/main\_${CURRENT_ENV}'
+          TARGET: 'lib/main_${CURRENT_ENV}'
           TEST_VAR3: 'lib/main\_$CURRENT_ENV'
           TEST_VAR4: 'lib/asd_$CURRENT_ENV'
           TEST_VAR5: 'lib/main_${CURRENT_ENV}'
@@ -67,3 +61,6 @@ jobs:
 
       - name: 'Checkout TEST_VAR2_{TEST_VAR2}'
         run: echo 'TEST_VAR2_${TEST_VAR2}'
+
+      - name: 'Web Build'
+        run: flutter build web --dart-define --target '$TARGET' --no-tree-shake-icons
