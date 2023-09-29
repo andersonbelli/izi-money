@@ -16,9 +16,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
     
-      - name: 'Checkout'
+      - name: 'Checkout ${{ github.head_ref }} ${{ github.event.pull_request.base.ref }}'
         env:
           PROJECT_ID: 'accuwriter-${{ github.event.pull_request.base.ref }}'
           TARGET: 'lib/main_${{ github.base_ref }}'
