@@ -20,7 +20,7 @@ jobs:
           TARGET1: 'lib/main\_${CURRENT_ENV}'
           TEST_VAR: 'lib/main\_$CURRENT_ENV'
           TEST_VAR1: $CURRENT_ENV
-          TEST_VAR2: 'lib/main_${{ CURRENT_ENV }}'
+          TEST_VAR2: 'lib/main_${CURRENT_ENV}'
         run: echo Base_REF ${{ github.base_ref }}
         
       - name: 'Checkout PROJECT_ID'
@@ -46,8 +46,11 @@ jobs:
       - name: 'Checkout TEST_VAR2_TEST_VAR2'
         run: echo 'TEST_VAR2_$TEST_VAR2'
 
-      - name: 'Checkout TEST_VAR2'
-        run: echo '$TEST_VAR2'
+      - name: 'Checkout {TEST_VAR2}'
+        run: echo '${TEST_VAR2}'
+
+      - name: 'Checkout TEST_VAR2_{TEST_VAR2}'
+        run: echo 'TEST_VAR2_${TEST_VAR2}'
 
       # Note: This workflow uses the latest stable version of the Dart SDK.
       # You can specify other versions if desired, see documentation here:
