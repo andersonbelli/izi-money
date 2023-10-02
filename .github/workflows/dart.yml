@@ -18,13 +18,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: haya14busa/action-cond@v1
-        id: check_env
+        id: checkenv
         with:
           cond: '${{ github.ref_name == ''develop'' }}'
           if_true: $( echo 'my_dev_true' >> $CURRENT_ENV )
           if_false: $( echo 'my_dev_false' >> $CURRENT_ENV )
-      - name: Use conditional value - check_env
-        run: 'echo "${{ steps.check_env.outputs.value }}"'
+      - name: Use conditional value - checkenv
+        run: 'echo checkenv -> "${{ steps.checkenv.outputs.value }}"'
       - name: Use conditional value
         run: |
           echo env.CURRENT_ENV
@@ -47,6 +47,9 @@ jobs:
             echo "env.MY_ENV_VAR >> ${{ env.MY_ENV_VAR }}"
             echo "aaaa ${{ env.MY_ENV_VAR }}"
             echo "bbbb ${MY_ENV_VAR}"
+            $MY_ENV_VAR = "my_develop_var"
+            MY_ENV_VAR = "my_develop_var"
+            echo "cccc ${MY_ENV_VAR}"
           elif [[ ${{ github.ref_name }} == qa ]]; then
             echo "current_env=$(${{ env.QA }})" >> $MY_ENV_VAR
             echo "current env is QA? ${current_env} - $MY_ENV_VAR"
@@ -72,7 +75,7 @@ jobs:
             echo "test"
             echo "selected-stage=test" >> "$GITHUB_OUTPUT"
           fi
-          echo "GITHUB_OUTPUT -> $GITHUB_OUTPUT"
+          echo "GITHUB_OUTPUT -==-> $GITHUB_OUTPUT"
                 
       - name: Use conditional value - select-environment
         run: 'echo "${{ steps.select-environment.outputs.select-environment }}"'
