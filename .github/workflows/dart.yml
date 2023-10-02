@@ -19,13 +19,16 @@ jobs:
       - uses: actions/checkout@v4
       - uses: haya14busa/action-cond@v1
         id: checkenv
+        continue-on-error: true
         with:
           cond: '${{ github.ref_name == ''develop'' }}'
           if_true: $( echo 'my_dev_true' >> $CURRENT_ENV )
           if_false: $( echo 'my_dev_false' >> $CURRENT_ENV )
       - name: Use conditional value - checkenv
         run: 'echo checkenv -> "${{ steps.checkenv.outputs.value }}"'
+        continue-on-error: true
       - name: Use conditional value
+        continue-on-error: true
         run: |
           echo env.CURRENT_ENV
           echo ${{ env.CURRENT_ENV }}
@@ -61,6 +64,7 @@ jobs:
             echo "CURRENT_ENV -> $CURRENT_ENV"
           fi
       - name: Select environment
+        continue-on-error: true
         id: select-environment
         run: |
           if [ "${{ github.ref_name }}" == "develop" ]; then
@@ -78,10 +82,12 @@ jobs:
           echo "GITHUB_OUTPUT -==-> $GITHUB_OUTPUT"
                 
       - name: Use conditional value - select-environment
+        continue-on-error: true
         run: 'echo "${{ steps.select-environment.outputs.select-environment }}"'
       - name: >-
           Checkout ${{ github.head_ref }} - ref_name-> ${{ github.ref_name }} - ${{
           github.event.pull_request.base.ref }}
+        continue-on-error: true
         env:
           PROJECT_ID2: 'accuwriter-${{ github.event.pull_request.base.ref }}'
           TEST_VAR3: 'lib/main\_${{ env.CURRENT_ENV }}'
@@ -95,15 +101,20 @@ jobs:
         env:
           PROJECT_ID1: 'accuwriter-${{ github.event.pull_request.base.ref }}'
         run: echo $PROJECT_ID1
+        if: false
       - name: Checkout PROJECT_ID
+        if: false
         run: echo $PROJECT_ID
       - name: Checkout PROJECT_ID
+        if: false
         run: echo 'PROJECT_ID_$PROJECT_ID'
       - name: Checkout TARGET env
+        if: false
         env:
           TARGET1: 'lib/main_${{ github.base_ref }}'
         run: echo $TARGET1
       - name: Checkout TARGET
+        if: false
         run: 'echo ''lib/main_${{ env.TARGET }}'''
       - name: Flutter
         if: false
