@@ -31,7 +31,7 @@ jobs:
         run: 'echo TRUE!!!!!'
         continue-on-error: true
         if: ${{ github.ref_name }} == 'develop'
-        - name: "nao É DEV? ${{ github.ref_name }} == 'qa'"
+      - name: "nao É DEV? ${{ github.ref_name }} == 'qa'"
         run: 'echo FALSE!!!!!'
         continue-on-error: true
         if: ${{ github.ref_name }} == 'qa'
