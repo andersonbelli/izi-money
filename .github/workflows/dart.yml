@@ -21,9 +21,9 @@ jobs:
         id: check_env
         with:
           cond: '${{ github.ref_name == ''develop'' }}'
-          if_true: $( 'my_dev' >> $CURRENT_ENV )
-          if_false: $( 'my_dev' >> $CURRENT_ENV )
-      - name: Use conditional value
+          if_true: $( echo 'my_dev_true' >> $CURRENT_ENV )
+          if_false: $( echo 'my_dev_false' >> $CURRENT_ENV )
+      - name: Use conditional value - check_env
         run: 'echo "${{ steps.check_env.outputs.value }}"'
       - name: Use conditional value
         run: |
