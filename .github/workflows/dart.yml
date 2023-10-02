@@ -38,9 +38,15 @@ jobs:
           current_env=${{ env.MY_ENV_VAR }}
           if [[ ${{ github.ref_name }} == develop ]]; then
             echo "current_env=$(${{ env.DEV }})" >> $MY_ENV_VAR
+            echo "delopinho1" >> $MY_ENV_VAR
+            echo "echo delopinho2" >> $MY_ENV_VAR
+            echo "env.MY_ENV_VAR - $MY_ENV_VAR - ${{ env.MY_ENV_VAR }}"
             echo "current env is DEV? ${current_env}"
             echo "env.DEV ${{ env.DEV }}"
             echo "env.MY_ENV_VAR ${{ env.MY_ENV_VAR }}"
+            echo "env.MY_ENV_VAR >> ${{ env.MY_ENV_VAR }}"
+            echo "aaaa ${{ env.MY_ENV_VAR }}"
+            echo "bbbb ${MY_ENV_VAR}"
           elif [[ ${{ github.ref_name }} == qa ]]; then
             echo "current_env=$(${{ env.QA }})" >> $MY_ENV_VAR
             echo "current env is QA? ${current_env} - $MY_ENV_VAR"
@@ -56,15 +62,17 @@ jobs:
         run: |
           if [ "${{ github.ref_name }}" == "develop" ]; then
             echo "develop"
-            echo "selected-stage=develop" >> "$GITHUB_OUTPUT"
+            echo "selected-stage=qa" >> "$GITHUB_OUTPUT"
             echo "GITHUB_OUTPUT -> $GITHUB_OUTPUT"
-          elif [ "${{ github.event_name }}" == "pull_request" ]; then
-            echo "staging"
-            echo "selected-stage=staging" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.ref_name }}" == "qa" ]; then
+            echo "qa"
+            echo "selected-stage=qa" >> "$GITHUB_OUTPUT"
+            echo "GITHUB_OUTPUT -> $GITHUB_OUTPUT"
           else
             echo "test"
             echo "selected-stage=test" >> "$GITHUB_OUTPUT"
           fi
+          echo "GITHUB_OUTPUT -> $GITHUB_OUTPUT"
                 
       - name: Use conditional value - select-environment
         run: 'echo "${{ steps.select-environment.outputs.select-environment }}"'
