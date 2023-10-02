@@ -7,8 +7,8 @@ name: Dart (test)
 env:
   QA: qa
   STAGING: staging
-  DEV: dev
-  MY_ENV_VAR: '${{ github.ref_name == ''dev'' }}'
+  DEV: develop
+  MY_ENV_VAR: '${{ github.ref_name == ''develop'' }}'
   CURRENT_ENV: '${{ github.ref_name }}'
   PROJECT_ID: 'accuwriter-${{ github.ref_name }}'
   TARGET: 'lib/main_${{ github.ref_name }}.dart'
@@ -20,14 +20,13 @@ jobs:
       - uses: haya14busa/action-cond@v1
         id: check_env
         with:
-          cond: '${{ github.ref_name == ''dev'' }}'
+          cond: '${{ github.ref_name == ''develop'' }}'
           if_true: $CURRENT_ENV
           if_false: value for non pull request event
       - name: Use conditional value
         run: 'echo "${{ steps.condval.outputs.value }}"'
       - name: Use conditional value
         run: |
-          ls
           echo env.CURRENT_ENV
           echo ${{ env.CURRENT_ENV }}
           echo env.MY_ENV_VAR
@@ -37,7 +36,7 @@ jobs:
           echo github.ref_name
           echo ${{ github.ref_name }}
           current_env=${{ env.MY_ENV_VAR }}
-          if [[ ${{ github.ref_name }} == dev ]]; then
+          if [[ ${{ github.ref_name }} == develop ]]; then
             echo "current_env=$(${{ env.DEV }})" >> $MY_ENV_VAR
             echo "current env is DEV? ${current_env}"
             echo "env.DEV ${{ env.DEV }}"
@@ -54,9 +53,9 @@ jobs:
       - name: Select environment
         id: select-environment
         run: |
-          if [ "${{ github.ref_name }}" == "dev" ]; then
-            echo "dev"
-            echo "selected-stage=dev" >> "$GITHUB_OUTPUT"
+          if [ "${{ github.ref_name }}" == "develop" ]; then
+            echo "develop"
+            echo "selected-stage=develop" >> "$GITHUB_OUTPUT"
           elif [ "${{ github.event_name }}" == "pull_request" ]; then
             echo "staging"
             echo "selected-stage=staging" >> "$GITHUB_OUTPUT"
@@ -68,7 +67,7 @@ jobs:
       - name: Use conditional value - select-environment
         run: 'echo "${{ steps.select-environment.outputs.select-environment }}"'
       - name: >-
-          Checkout ${{ github.head_ref }} - ${{ github.ref_name }} - ${{
+          Checkout ${{ github.head_ref }} - ref_name-> ${{ github.ref_name }} - ${{
           github.event.pull_request.base.ref }}
         env:
           PROJECT_ID2: 'accuwriter-${{ github.event.pull_request.base.ref }}'
@@ -94,12 +93,14 @@ jobs:
       - name: Checkout TARGET
         run: 'echo ''lib/main_${{ env.TARGET }}'''
       - name: Flutter
+        if: false
         uses: subosito/flutter-action@v2
         with:
           flutter-version: 3.13.x
           channel: stable
           cache: true
       - name: Web Build
+        if: false
         run: >-
           flutter build web --dart-define --target ${{ env.TARGET }}
           --no-tree-shake-icons
