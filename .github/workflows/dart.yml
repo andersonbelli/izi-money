@@ -28,7 +28,7 @@ jobs:
       - name: github.event.head_commit echo
         run: 'echo github_head_commit -> "${{ github.event.head_commit.message }}"'
       - name: bash echo
-        run: "myvar=$(echo 'short stringa1234567' | sed 's/\(.\{15\}\).*/\1.../');"
+        run: 'myvar=$(echo "short stringa1234567" | sed "s/\(.\{15\}\).*/\1.../");'
       - name: bash echo myvar
         run: "echo $myvar"
       - name: Truncate String
