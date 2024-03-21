@@ -29,13 +29,17 @@ jobs:
         shell: bash
         run: |
           str="${{ github.event.head_commit.message }}"
+          echo "str: ${str}"
           if [ ${#str} -gt 30 ]; then
+            echo "if str: ${str}"
             truncatedStr=$(echo "$str" | cut -c -30)
+            echo "if truncatedStr: ${truncatedStr}"
           else
             truncatedStr="$str"
+            echo "else truncatedStr: ${truncatedStr}"
           fi
-          echo "{truncated-commit}={truncatedStr}" >> $GITHUB_OUTPUT
           echo "truncated_string: ${truncatedStr}"
+          echo "{truncated-commit}={truncatedStr}" >> $GITHUB_OUTPUT
 
   build:
     runs-on: ubuntu-latest
@@ -49,20 +53,8 @@ jobs:
           cond: '${{ github.ref_name == ''develop'' }}'
           if_true: $( echo 'my_dev_true' >> $CURRENT_ENV )
           if_false: $( echo 'my_dev_false' >> $CURRENT_ENV )
-      - name: Truncate String
-        id: truncate
-        shell: bash
-        run: |
-          str="${{ github.event.head_commit.message }}"
-          if [ ${#str} -gt 30 ]; then
-            truncatedStr=$(echo "$str" | cut -c -30)
-          else
-            truncatedStr="$str"
-          fi
-          echo "{truncated_string}={truncatedStr}" >> $GITHUB_OUTPUT
-          echo "truncated_string: ${truncated_string}"
 
       - name: Use Truncated String
         run: |
-          echo "string: ${{ needs.EnvSetup.outputs.truncated }}"
+          echo "string: ${{ needs.envSetup.outputs.truncated }}"
         
