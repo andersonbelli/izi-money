@@ -22,8 +22,19 @@ jobs:
     steps:
       - name: truncate string
         shell: bash
+        id: truncated-str1
+        run: echo "truncated-commit1=${{ github.event.head_commit.message }}" >> $GITHUB_OUTPUT
+      - name: Truncate String
         id: truncated-str
-        run: echo "truncated-commit=${{ github.event.head_commit.message }}" >> $GITHUB_OUTPUT
+        run: |
+          str="${{ github.event.head_commit.message }}"
+          if [ ${#str} -gt 30 ]; then
+            truncatedStr=$(echo "$str" | cut -c -30)
+          else
+            truncatedStr="$str"
+          fi
+          echo "{truncated-commit}={truncatedStr}" >> $GITHUB_OUTPUT
+          echo "truncated_string: ${truncated-commit}"
 
   build:
     runs-on: ubuntu-latest
