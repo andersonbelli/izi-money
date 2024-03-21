@@ -34,7 +34,7 @@ jobs:
           else
             truncatedStr="$str"
           fi
-          echo "::set-output name=truncated_string::$truncatedStr"
+          echo "{truncated_string}={truncatedStr}" >> $GITHUB_OUTPUT
 
       - name: Use Truncated String
         run: |
