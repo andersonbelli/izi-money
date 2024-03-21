@@ -25,19 +25,15 @@ jobs:
           cond: '${{ github.ref_name == ''develop'' }}'
           if_true: $( echo 'my_dev_true' >> $CURRENT_ENV )
           if_false: $( echo 'my_dev_false' >> $CURRENT_ENV )
-      - name: github.event.head_commit echo
-        run: 'echo github_head_commit -> "${{ github.event.head_commit.message }}"'
-      - name: bash echo
-        run: 'myvar=$(echo "short stringa1234567" | sed "s/\(.\{15\}\).*/\1.../");'
-      - name: bash echo myvar
-        run: "echo $myvar"
       - name: Truncate String
-        uses: 2428392/gh-truncate-string-action@v1.2.0
-        id: truncatedString
-        with:
-          stringToTruncate: ${{ github.event.head_commit.message }}
-          maxLength: 60
-      - name: Truncate String echo
-        run: 'echo truncatestring -> "${{ steps.truncatedString.outputs.string }}"'
-      - name: aaaaaa
-        run: 'echo -------------'
+        id: truncate
+        run: |
+          const str = '${{ github.event.head_commit.message }}';
+          const truncatedStr = str.length > 30 ? str.substring(0, 30) : str;
+          console.log(truncatedStr);
+          echo "::set-output name=truncated_string::${truncatedStr}"
+
+      - name: Use Truncated String
+        run: |
+          echo "Truncated String: ${{ steps.truncate.outputs.truncated_string }}"
+        
