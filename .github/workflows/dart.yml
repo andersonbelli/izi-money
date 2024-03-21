@@ -36,7 +36,7 @@ jobs:
           fi
           echo "truncated_string: ${truncatedStr}"
           
-          echo "truncated-commit={truncatedStr}" >> $GITHUB_OUTPUT
+          echo "truncated-commit=${truncatedStr}" >> $GITHUB_OUTPUT
 
   build:
     runs-on: ubuntu-latest
