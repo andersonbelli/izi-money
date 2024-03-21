@@ -28,10 +28,13 @@ jobs:
       - name: Truncate String
         id: truncate
         run: |
-          const str = '${{ github.event.head_commit.message }}';
-          const truncatedStr = str.length > 30 ? str.substring(0, 30) : str;
-          console.log(truncatedStr);
-          echo "::set-output name=truncated_string::${truncatedStr}"
+          str="${{ github.event.head_commit.message }}"
+          if [ ${#str} -gt 30 ]; then
+            truncatedStr=$(echo "$str" | cut -c -30)
+          else
+            truncatedStr="$str"
+          fi
+          echo "::set-output name=truncated_string::$truncatedStr"
 
       - name: Use Truncated String
         run: |
