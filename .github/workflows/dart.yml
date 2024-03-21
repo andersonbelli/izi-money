@@ -14,10 +14,20 @@ env:
   PROJECT_ID: 'accuwriter-${{ github.ref_name }}'
   TARGET: 'lib/main_${{ github.ref_name }}.dart'
 jobs:
-  build:
+  envSetup:
+    name: Publish Base Environment Vars
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ steps.truncate.outputs.truncated_string }}
+      truncated: ${{ steps.truncated-str.outputs.truncated-commit }}
+    steps:
+      - name: truncate string
+        shell: bash
+        id: truncated-str
+        run: echo "truncated-commit=${{ github.event.head_commit.message }}" >> $GITHUB_OUTPUT
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [envSetup]
     steps:
       - uses: actions/checkout@v4
       - uses: haya14busa/action-cond@v1
@@ -40,9 +50,7 @@ jobs:
           echo "truncated_string: ${truncated_string}"
 
       - name: Use Truncated String
-        env:
-          OUTPUT1: ${{jobs.build.outputs.output1}}
         run: |
-          echo "Truncated String: OUTPUT1: $OUTPUT1"
-          echo "Truncated String: truncated: ${{ steps.truncate.outputs.truncated_string }}"
+          run: |
+          echo "string: ${{ needs.EnvSetup.outputs.truncated }}"
         
