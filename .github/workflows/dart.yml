@@ -37,10 +37,11 @@ jobs:
             truncatedStr="$str"
           fi
           echo "{truncated_string}={truncatedStr}" >> $GITHUB_OUTPUT
+          echo "truncated_string: ${truncated_string}"
 
       - name: Use Truncated String
         env:
-          OUTPUT1: ${{steps.truncate.outputs.output1}}
+          OUTPUT1: ${{jobs.build.outputs.output1}}
         run: |
           echo "Truncated String: OUTPUT1: $OUTPUT1"
           echo "Truncated String: truncated: ${{ steps.truncate.outputs.truncated_string }}"
