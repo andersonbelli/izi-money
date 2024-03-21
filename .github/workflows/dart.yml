@@ -16,6 +16,8 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.truncate.outputs.truncated_string }}
     steps:
       - uses: actions/checkout@v4
       - uses: haya14busa/action-cond@v1
@@ -37,6 +39,9 @@ jobs:
           echo "{truncated_string}={truncatedStr}" >> $GITHUB_OUTPUT
 
       - name: Use Truncated String
+      - env:
+          OUTPUT1: ${{steps.truncate.outputs.output1}}
         run: |
-          echo "Truncated String: ${{ steps.truncate.outputs.truncated_string }}"
+          echo "Truncated String: OUTPUT1: $OUTPUT1"
+          echo "Truncated String: truncated: ${{ steps.truncate.outputs.truncated_string }}"
         
