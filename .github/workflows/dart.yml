@@ -35,22 +35,14 @@ jobs:
             echo "else truncatedStr: ${truncatedStr}"
           fi
           echo "truncated_string: ${truncatedStr}"
-          echo "{truncated-commit}={truncatedStr}" >> $GITHUB_OUTPUT
+          echo "truncated-commit={truncatedStr}" >> $GITHUB_OUTPUT
 
   build:
     runs-on: ubuntu-latest
     needs: [envSetup]
     steps:
-      - uses: actions/checkout@v4
-      - uses: haya14busa/action-cond@v1
-        id: checkenv
-        continue-on-error: true
-        with:
-          cond: '${{ github.ref_name == ''develop'' }}'
-          if_true: $( echo 'my_dev_true' >> $CURRENT_ENV )
-          if_false: $( echo 'my_dev_false' >> $CURRENT_ENV )
-
       - name: Use Truncated String
+        shell: bash
         run: |
           echo "string: ${{ needs.envSetup.outputs.truncated }}"
         
